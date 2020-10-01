@@ -1,0 +1,95 @@
+name: KhadoAndSons
+description: A new Book selling  Flutter application.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  html: 0.14.0+3
+  http:
+  nb_utils: 3.0.1
+  carousel_pro:
+  flutter_statusbarcolor: 0.2.3
+  connectivity:
+  flutter_svg: 0.18.1
+  rating_bar:
+  popup_menu:
+  onesignal_flutter: ^2.2.0
+  badges:
+  intl:
+  path_provider:
+  percent_indicator:
+  permission_handler: ^4.0.0
+  flutter_full_pdf_viewer: ^1.0.6
+  video_player:
+  url_launcher:
+  share:
+  launch_review: ^1.0.1
+  dots_indicator: ^0.0.4
+  image_picker_gallery_camera:
+  sqflite: ^1.2.0
+  flutter_downloader:
+  speech_to_text:
+  device_id: 0.1.3
+  provider:
+  firebase_admob:
+  braintree_payment:
+  shared_preferences: 0.5.7+3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/icons/
+    - assets/AppIcon.png
+    - assets/bg_splash.jpg
+    - assets/icoCart.png
+    - assets/icoMenu.png
+    - assets/icoVoice.png
+    - assets/icoBack.png
+    - assets/icoShare.png
+    - assets/icoPlaceholder.png
+    - assets/icoWishlist.png
+    - assets/gifs/
+    - assets/flags/
+    - lang/en.json
+    - lang/fr.json
+    - lang/es.json
+    - lang/af.json
+    - lang/de.json
+    - lang/id.json
+    - lang/pt.json
+    - lang/tr.json
+    - lang/hi.json
+    - lang/ar.json
+  fonts:
+    - family: Regular
+      fonts:
+        - asset: assets/fonts/googlesansregular.ttf
+
+    - family: Medium
+      fonts:
+        - asset: assets/fonts/googlesansmedium.ttf
+
+    - family: Semibold
+      fonts:
+        - asset: assets/fonts/googlesansmedium.ttf
+
+    - family: Bold
+      fonts:
+        - asset: assets/fonts/googlesansebold.ttf
+
+
