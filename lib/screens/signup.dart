@@ -59,9 +59,7 @@ class SignUpState extends State<SignUp> {
       'email': email,
       'name': name,
       'password': password,
-/*
       'username': username,
-*/
     };
     isNetworkAvailable().then((bool) {
       if (bool) {
