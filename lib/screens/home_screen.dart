@@ -2,36 +2,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:KhadoAndSons/models/response/author.dart';
-import 'package:KhadoAndSons/models/response/book_detail.dart';
-import 'package:KhadoAndSons/models/response/category.dart';
-import 'package:KhadoAndSons/models/response/dashboard_response.dart';
-import 'package:KhadoAndSons/models/response/slider.dart';
-import 'package:KhadoAndSons/network/common_api_calls.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/screens/about_app_screen.dart';
-import 'package:KhadoAndSons/screens/author_detail_screen.dart';
-import 'package:KhadoAndSons/screens/author_list.dart';
-import 'package:KhadoAndSons/screens/cart_screen.dart';
-import 'package:KhadoAndSons/screens/category_book_screen.dart';
-import 'package:KhadoAndSons/screens/change_password_screen.dart';
-import 'package:KhadoAndSons/screens/feedback_screen.dart';
-import 'package:KhadoAndSons/screens/library_screen.dart';
-import 'package:KhadoAndSons/screens/profile_screen.dart';
-import 'package:KhadoAndSons/screens/search_book_screen.dart';
-import 'package:KhadoAndSons/screens/setting_screen.dart';
-import 'package:KhadoAndSons/screens/signIn.dart';
-import 'package:KhadoAndSons/screens/transaction_history_screen.dart';
-import 'package:KhadoAndSons/screens/view_all_book_screen.dart';
-import 'package:KhadoAndSons/screens/wishlist_screens.dart';
-import 'package:KhadoAndSons/utils/slider_widget.dart';
-import 'package:KhadoAndSons/utils/admob_utils.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/images.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/author.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/category.dart';
+import 'package:granth_flutter/models/response/dashboard_response.dart';
+import 'package:granth_flutter/models/response/slider.dart';
+import 'package:granth_flutter/network/common_api_calls.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/screens/about_app_screen.dart';
+import 'package:granth_flutter/screens/author_detail_screen.dart';
+import 'package:granth_flutter/screens/author_list.dart';
+import 'package:granth_flutter/screens/cart_screen.dart';
+import 'package:granth_flutter/screens/category_book_screen.dart';
+import 'package:granth_flutter/screens/change_password_screen.dart';
+import 'package:granth_flutter/screens/feedback_screen.dart';
+import 'package:granth_flutter/screens/library_screen.dart';
+import 'package:granth_flutter/screens/profile_screen.dart';
+import 'package:granth_flutter/screens/search_book_screen.dart';
+import 'package:granth_flutter/screens/setting_screen.dart';
+import 'package:granth_flutter/screens/signIn.dart';
+import 'package:granth_flutter/screens/transaction_history_screen.dart';
+import 'package:granth_flutter/screens/view_all_book_screen.dart';
+import 'package:granth_flutter/screens/wishlist_screens.dart';
+import 'package:granth_flutter/utils/slider_widget.dart';
+import 'package:granth_flutter/utils/admob_utils.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/images.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:share/share.dart';
@@ -39,7 +39,6 @@ import 'package:firebase_admob/firebase_admob.dart';
 
 import '../app_localizations.dart';
 import 'package:firebase_admob/firebase_admob.dart';
-
 class HomeScreen extends StatefulWidget {
   static String tag = '/HomeScreen';
 
@@ -78,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen>
   var isLoading = false;
   var isError = false;
   var noInternetConnection = true;
-  var noDataAvailable = false;
+  var noDataAvailable=false;
   BannerAd _bannerAd;
 
   Future<Null> fetchDashboardData() async {
@@ -91,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen>
           isError = false;
           isLoading = true;
         });
-        noDataAvailable = true;
+        noDataAvailable=true;
         getDashboard().then((res) {
           if (!mounted) {
             return;
@@ -100,43 +99,36 @@ class _HomeScreenState extends State<HomeScreen>
           dashboardResponse = DashboardResponse.fromJson(res);
           setState(() {
             isLoading = false;
-            if (dashboardResponse.categoryBook != null &&
-                dashboardResponse.categoryBook.length > 0) {
+            if (dashboardResponse.categoryBook != null && dashboardResponse.categoryBook.length>0) {
               mCategories.clear();
               mCategories.addAll(dashboardResponse.categoryBook);
               noDataAvailable = false;
             }
-            if (dashboardResponse.slider != null &&
-                dashboardResponse.slider.length > 0) {
+            if (dashboardResponse.slider != null && dashboardResponse.slider.length>0) {
               mSliderList.clear();
               mSliderList.addAll(dashboardResponse.slider);
             }
-            if (dashboardResponse.topSearchBook != null &&
-                dashboardResponse.topSearchBook.length > 0) {
+            if (dashboardResponse.topSearchBook != null && dashboardResponse.topSearchBook.length>0) {
               mNewestBook.clear();
               mNewestBook.addAll(dashboardResponse.topSearchBook);
               noDataAvailable = false;
             }
-            if (dashboardResponse.popularBook != null &&
-                dashboardResponse.popularBook.length > 0) {
+            if (dashboardResponse.popularBook != null && dashboardResponse.popularBook.length>0) {
               mPopularBook.clear();
               mPopularBook.addAll(dashboardResponse.popularBook);
               noDataAvailable = false;
             }
-            if (dashboardResponse.recommendedBook != null &&
-                dashboardResponse.recommendedBook.length > 0) {
+            if (dashboardResponse.recommendedBook != null && dashboardResponse.recommendedBook.length>0) {
               mRecommendedBook.clear();
               mRecommendedBook.addAll(dashboardResponse.recommendedBook);
               noDataAvailable = false;
             }
-            if (dashboardResponse.topSellBook != null &&
-                dashboardResponse.topSellBook.length > 0) {
+            if (dashboardResponse.topSellBook != null && dashboardResponse.topSellBook.length>0) {
               mTopSellingBook.clear();
               mTopSellingBook.addAll(dashboardResponse.topSellBook);
               noDataAvailable = false;
             }
-            if (dashboardResponse.topAuthor != null &&
-                dashboardResponse.topAuthor.length > 0) {
+            if (dashboardResponse.topAuthor != null && dashboardResponse.topAuthor.length>0) {
               mBestAuthorList.clear();
               mBestAuthorList.addAll(dashboardResponse.topAuthor);
               noDataAvailable = false;
@@ -149,8 +141,9 @@ class _HomeScreenState extends State<HomeScreen>
               print(config.key + "*" + config.value);
             });
           }
-          setBool(IS_PAYPAL_ENABLED, dashboardResponse.isPayPalEnabled);
-          setBool(IS_PAYTM_ENABLED, dashboardResponse.isPayTmEnabled);
+          setBool(IS_PAYPAL_ENABLED,dashboardResponse.isPayPalEnabled);
+          setBool(IS_PAYTM_ENABLED,dashboardResponse.isPayTmEnabled);
+
         }).catchError((error) {
           toast(error.toString());
           setState(() {
@@ -206,8 +199,8 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-  }
 
+  }
   BannerAd createBannerAd() {
     return BannerAd(
       adUnitId: BannerAd.testAdUnitId,
@@ -224,8 +217,7 @@ class _HomeScreenState extends State<HomeScreen>
     var width = MediaQuery.of(context).size.width;
     var slider = Padding(
       padding: const EdgeInsets.only(top: 60.0),
-      child:
-          mSliderList.isNotEmpty ? HomeSliderWidget(mSliderList) : Container(),
+      child: mSliderList.isNotEmpty ? HomeSliderWidget(mSliderList) : Container(),
     );
     var categoryList = Container(
       height: width * 0.2,
@@ -242,8 +234,7 @@ class _HomeScreenState extends State<HomeScreen>
                         builder: (context) => CategoryBooks(
                               type: 'category',
                               title: mCategories[index].name,
-                              categoryId:
-                                  mCategories[index].categoryId.toString(),
+                              categoryId: mCategories[index].categoryId.toString(),
                             )));
               },
               child: Container(
@@ -287,9 +278,7 @@ class _HomeScreenState extends State<HomeScreen>
                     radius: width * 0.1,
                     child: CircleAvatar(
                       radius: width * 0.1,
-                      backgroundImage: mBestAuthorList[index].image != null
-                          ? NetworkImage(mBestAuthorList[index].image)
-                          : AssetImage(ic_profile),
+                      backgroundImage:mBestAuthorList[index].image!=null? NetworkImage(mBestAuthorList[index].image):AssetImage(ic_profile),
                     ),
                     onTap: () {
                       Navigator.push(
@@ -327,83 +316,74 @@ class _HomeScreenState extends State<HomeScreen>
     var topSeelling =
         BookHorizontalList(mTopSellingBook).visible(mTopSellingBook.isNotEmpty);
 
-    var containerBody = dashboardResponse != null
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              horizontalHeading(context, keyString(context, "top_search_books"),
-                  callback: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ViewAllBooks(
-                              type: type_top_search,
-                              title: keyString(context, "top_search_books"),
-                            )));
-              }).visible(dashboardResponse.topSearchBook != null &&
-                  dashboardResponse.topSearchBook.isNotEmpty),
-              newBook.visible(dashboardResponse.topSearchBook != null &&
-                  dashboardResponse.topSearchBook.isNotEmpty),
-              horizontalHeading(context, keyString(context, "lbl_collections"),
-                      showViewAll: false)
-                  .visible(dashboardResponse.categoryBook != null &&
-                      dashboardResponse.categoryBook.isNotEmpty),
-              categoryList.paddingOnly(bottom: spacing_standard_new).visible(
-                  dashboardResponse.categoryBook != null &&
-                      dashboardResponse.categoryBook.isNotEmpty),
-              horizontalHeading(
-                  context, keyString(context, "recommended_books"),
-                  callback: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ViewAllBooks(
-                              type: type_recommended,
-                              title: keyString(context, "recommended_books"),
-                            )));
-              }).visible(dashboardResponse.recommendedBook != null &&
-                  dashboardResponse.recommendedBook.isNotEmpty),
-              recoomBooks.visible(dashboardResponse.recommendedBook != null &&
-                  dashboardResponse.recommendedBook.isNotEmpty),
-              horizontalHeading(context, keyString(context, "popular_books"),
-                  callback: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ViewAllBooks(
-                              type: type_popular,
-                              title: keyString(context, "popular_books"),
-                            )));
-              }).visible(dashboardResponse.recommendedBook != null &&
-                  dashboardResponse.recommendedBook.isNotEmpty),
-              popularbookList.visible(
-                  dashboardResponse.recommendedBook != null &&
-                      dashboardResponse.recommendedBook.isNotEmpty),
-              horizontalHeading(context, keyString(context, "lbl_top_selling"),
-                  callback: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ViewAllBooks(
-                              type: type_top_sell,
-                              title: keyString(context, "lbl_top_selling"),
-                            )));
-              }).visible(dashboardResponse.topSellBook != null &&
-                  dashboardResponse.topSellBook.isNotEmpty),
-              topSeelling.visible(dashboardResponse.topSellBook != null &&
-                  dashboardResponse.topSellBook.isNotEmpty),
-              horizontalHeading(context, keyString(context, "best_author"),
-                  callback: () {
-                launchScreen(context, AuthorsListScreen.tag);
-              }).visible(dashboardResponse.topAuthor != null &&
-                  dashboardResponse.topAuthor.isNotEmpty),
-              authorList.visible(dashboardResponse.topAuthor != null &&
-                  dashboardResponse.topAuthor.isNotEmpty),
-            ],
-          )
-        : Container();
+    var containerBody=dashboardResponse!=null?Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        horizontalHeading(context, keyString(context, "top_search_books"), callback: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ViewAllBooks(
+                    type: type_top_search,
+                    title: keyString(
+                        context, "top_search_books"),
+                  )));
+        }).visible(dashboardResponse.topSearchBook!=null && dashboardResponse.topSearchBook.isNotEmpty),
+        newBook.visible(dashboardResponse.topSearchBook!=null && dashboardResponse.topSearchBook.isNotEmpty),
+        horizontalHeading(
+            context, keyString(context, "lbl_collections"),
+            showViewAll: false).visible(dashboardResponse.categoryBook!=null && dashboardResponse.categoryBook.isNotEmpty),
+        categoryList.paddingOnly(
+            bottom: spacing_standard_new).visible(dashboardResponse.categoryBook!=null && dashboardResponse.categoryBook.isNotEmpty),
+        horizontalHeading(
+            context, keyString(context, "recommended_books"),
+            callback: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ViewAllBooks(
+                        type: type_recommended,
+                        title: keyString(
+                            context, "recommended_books"),
+                      )));
+            }).visible(dashboardResponse.recommendedBook!=null && dashboardResponse.recommendedBook.isNotEmpty),
+        recoomBooks.visible(dashboardResponse.recommendedBook!=null && dashboardResponse.recommendedBook.isNotEmpty),
+        horizontalHeading(
+            context, keyString(context, "popular_books"),
+            callback: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ViewAllBooks(
+                        type: type_popular,
+                        title: keyString(
+                            context, "popular_books"),
+                      )));
+            }).visible(dashboardResponse.recommendedBook!=null && dashboardResponse.recommendedBook.isNotEmpty),
+        popularbookList.visible(dashboardResponse.recommendedBook!=null && dashboardResponse.recommendedBook.isNotEmpty),
+        horizontalHeading(
+            context, keyString(context, "lbl_top_selling"),
+            callback: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ViewAllBooks(
+                        type: type_top_sell,
+                        title: keyString(
+                            context, "lbl_top_selling"),
+                      )));
+            }).visible(dashboardResponse.topSellBook!=null && dashboardResponse.topSellBook.isNotEmpty),
+        topSeelling.visible(dashboardResponse.topSellBook!=null && dashboardResponse.topSellBook.isNotEmpty),
+        horizontalHeading(
+            context, keyString(context, "best_author"),
+            callback: () {
+              launchScreen(context, AuthorsListScreen.tag);
+            }).visible(dashboardResponse.topAuthor!=null && dashboardResponse.topAuthor.isNotEmpty),
+        authorList.visible(dashboardResponse.topAuthor!=null && dashboardResponse.topAuthor.isNotEmpty),
+      ],
+    ):Container();
 
-    var someError = Container(
+    var someError=Container(
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -417,7 +397,8 @@ class _HomeScreenState extends State<HomeScreen>
                 textColor: Theme.of(context).textTheme.title.color),
             shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(5.0),
-              side: BorderSide(color: Theme.of(context).textTheme.title.color),
+              side: BorderSide(
+                  color: Theme.of(context).textTheme.title.color),
             ),
             onPressed: () {
               fetchDashboardData();
@@ -427,7 +408,7 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     ).visible(isError && dashboardResponse == null);
 
-    var noInternetError = Container(
+    var noInternetError=Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height,
       child: Column(
@@ -438,14 +419,15 @@ class _HomeScreenState extends State<HomeScreen>
             width: 120,
             height: 120,
           ),
-          text(context, keyString(context, "error_network_no_internet"),
-                  textColor: Theme.of(context).textTheme.title.color,
-                  fontFamily: font_medium,
-                  fontSize: ts_medium_large)
+          text(context,
+              keyString(context, "error_network_no_internet"),
+              textColor: Theme.of(context).textTheme.title.color,
+              fontFamily: font_medium,
+              fontSize: ts_medium_large)
               .paddingTop(spacing_standard_new),
           MaterialButton(
-            padding:
-                EdgeInsets.fromLTRB(30, spacing_standard, 30, spacing_standard),
+            padding: EdgeInsets.fromLTRB(
+                30, spacing_standard, 30, spacing_standard),
             textColor: white,
             child: text(context, keyString(context, "lbl_try_again"),
                 fontSize: ts_normal,
@@ -463,7 +445,7 @@ class _HomeScreenState extends State<HomeScreen>
         ],
       ),
     ).visible(!noInternetConnection && dashboardResponse == null);
-    var noData = Container(
+    var noData=Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height,
       child: Column(
@@ -474,14 +456,15 @@ class _HomeScreenState extends State<HomeScreen>
             width: 180,
             height: 180,
           ),
-          text(context, "No Books available",
-                  textColor: Theme.of(context).textTheme.subtitle.color,
-                  fontFamily: font_medium,
-                  fontSize: ts_large)
+          text(context,
+              "No Books available",
+              textColor: Theme.of(context).textTheme.subtitle.color,
+              fontFamily: font_medium,
+              fontSize: ts_large)
               .paddingTop(spacing_standard_new),
         ],
       ),
-    ).visible(noDataAvailable && !isLoading && !isError);
+    ).visible(noDataAvailable && !isLoading&& !isError);
     GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: _scaffoldKey,
@@ -546,7 +529,7 @@ class _HomeScreenState extends State<HomeScreen>
             children: <Widget>[
               dashboardResponse != null
                   ? SingleChildScrollView(
-                      child: containerBody,
+                      child:containerBody ,
                     )
                   : Container(),
               someError,

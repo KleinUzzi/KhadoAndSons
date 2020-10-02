@@ -1,10 +1,10 @@
-package net.awesometechno.khadoandsons
+package com.iqonic.fluttergranth
 
 
 import androidx.annotation.NonNull
-import net.awesometechno.khadoandsons.epub_kitty.EpubKittyPlugin
-//import com.iqonic.KhadoAndSons.braintree.BrainTreePaymentPlugin
-import net.awesometechno.khadoandsons.paytm.PaytmPlugin
+import com.iqonic.fluttergranth.epub_kitty.EpubKittyPlugin
+//import com.iqonic.granth_flutter.braintree.BrainTreePaymentPlugin
+import com.iqonic.fluttergranth.paytm.PaytmPlugin
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugins.GeneratedPluginRegistrant

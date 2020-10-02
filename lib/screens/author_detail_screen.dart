@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:KhadoAndSons/models/response/author.dart';
-import 'package:KhadoAndSons/models/response/book_detail.dart';
-import 'package:KhadoAndSons/models/response/book_list.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/author.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/book_list.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../app_localizations.dart';
@@ -24,8 +24,7 @@ class AuthorDetailScreen extends StatefulWidget {
   AuthorDetailScreenState createState() => AuthorDetailScreenState();
 }
 
-class AuthorDetailScreenState extends State<AuthorDetailScreen>
-    with TickerProviderStateMixin<AuthorDetailScreen> {
+class AuthorDetailScreenState extends State<AuthorDetailScreen> with TickerProviderStateMixin<AuthorDetailScreen> {
   var mIsFirstTime = true;
   var totalBooks = 0;
   var page = 1;
@@ -58,9 +57,7 @@ class AuthorDetailScreenState extends State<AuthorDetailScreen>
   }
 
   scrollHandler() {
-    if (scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent &&
-        !isLastPage) {
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent && !isLastPage) {
       page++;
       setState(() {
         isLoadingMoreData = true;
@@ -89,20 +86,17 @@ class AuthorDetailScreenState extends State<AuthorDetailScreen>
           });
         });
       } else {
-        toast(keyString(context, "error_network_no_internet"));
+        toast(keyString(context,"error_network_no_internet"));
       }
     });
   }
 
   Widget listItemBuilder(context, BookDetail bookDetail) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    BookDescriptionScreen(bookDetail: bookDetail)));
-      },
+    return
+      InkWell(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => BookDescriptionScreen(bookDetail: bookDetail)));
+        },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -126,27 +120,19 @@ class AuthorDetailScreenState extends State<AuthorDetailScreen>
             textAlign: TextAlign.left,
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
-          )
-              .withStyle(
-                  color: Theme.of(context).textTheme.title.color,
-                  fontFamily: font_bold,
-                  fontSize: ts_medium_small)
-              .paddingOnly(right: 8, bottom: 0, top: 8),
+          ).withStyle(color: Theme.of(context).textTheme.title.color, fontFamily: font_bold, fontSize: ts_medium_small).paddingOnly(right: 8, bottom: 0, top: 8),
           Expanded(
             child: Text(
               bookDetail.authorName,
               maxLines: 1,
-            )
-                .withStyle(
-                    color: Theme.of(context).textTheme.subtitle.color,
-                    fontFamily: font_regular,
-                    fontSize: ts_medium_small)
-                .paddingOnly(right: 8, bottom: 8),
+            ).withStyle(color: Theme.of(context).textTheme.subtitle.color, fontFamily: font_regular, fontSize: ts_medium_small).paddingOnly(right: 8, bottom: 8),
           ),
         ],
       ).paddingAll(8),
     );
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -170,25 +156,12 @@ class AuthorDetailScreenState extends State<AuthorDetailScreen>
               )).paddingBottom(spacing_standard_new),
           Text(
             widget.authorDetail.name,
-          )
-              .withStyle(
-                  color: Theme.of(context).textTheme.title.color,
-                  fontFamily: font_bold,
-                  fontSize: ts_large)
-              .paddingOnly(bottom: 4),
+          ).withStyle(color: Theme.of(context).textTheme.title.color, fontFamily: font_bold, fontSize: ts_large).paddingOnly(bottom: 4),
           Container(
             margin: EdgeInsets.only(top: spacing_control),
-            padding: EdgeInsets.fromLTRB(spacing_middle, spacing_control,
-                spacing_middle, spacing_control),
-            decoration: boxDecoration(context,
-                radius: spacing_standard_new,
-                bgColor: Theme.of(context).primaryColor.withOpacity(0.15),
-                showShadow: true),
-            child: Text(keyString(context, "lbl_publishBook") +
-                    totalBooks.toString())
-                .withStyle(
-                    color: Theme.of(context).textTheme.title.color,
-                    fontFamily: font_medium),
+            padding: EdgeInsets.fromLTRB(spacing_middle, spacing_control, spacing_middle, spacing_control),
+            decoration: boxDecoration(context,radius: spacing_standard_new, bgColor: Theme.of(context).primaryColor.withOpacity(0.15), showShadow: true),
+            child: Text( keyString(context,"lbl_publishBook") + totalBooks.toString()).withStyle(color: Theme.of(context).textTheme.title.color, fontFamily: font_medium),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -197,62 +170,37 @@ class AuthorDetailScreenState extends State<AuthorDetailScreen>
               Text(
                 widget.authorDetail.description,
                 maxLines: isExpanded ? null : 3,
-              )
-                  .withStyle(
-                      color: Theme.of(context).textTheme.subtitle.color,
-                      fontFamily: font_regular)
-                  .paddingOnly(
-                      left: spacing_standard_new,
-                      right: spacing_standard_new,
-                      top: spacing_standard_new),
+              ).withStyle(color: Theme.of(context).textTheme.subtitle.color, fontFamily: font_regular).paddingOnly(left: spacing_standard_new, right: spacing_standard_new, top: spacing_standard_new),
               Column(
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text(keyString(context, "lbl_description"))
-                          .withStyle(
-                              color: Theme.of(context).textTheme.title.color,
-                              fontFamily: font_regular)
-                          .withWidth(200),
+                      Text(keyString(context,"lbl_description")).withStyle(color: Theme.of(context).textTheme.title.color, fontFamily: font_regular).withWidth(200),
                       Expanded(
                           child: Text(
                         widget.authorDetail.designation,
                         maxLines: 3,
-                      ).withStyle(
-                              color: Theme.of(context).textTheme.subtitle.color,
-                              fontFamily: font_regular)),
+                      ).withStyle(color: Theme.of(context).textTheme.subtitle.color, fontFamily: font_regular)),
                     ],
                   ).paddingOnly(top: 16, left: 16, right: 16),
                   Row(
                     children: <Widget>[
-                      Text(keyString(context, "lbl_address"))
-                          .withStyle(
-                              color: Theme.of(context).textTheme.title.color,
-                              fontFamily: font_regular)
-                          .withWidth(200),
+                      Text(keyString(context,"lbl_address")).withStyle(color: Theme.of(context).textTheme.title.color, fontFamily: font_regular).withWidth(200),
                       Expanded(
                           child: Text(
                         widget.authorDetail.address,
                         maxLines: 3,
-                      ).withStyle(
-                              color: Theme.of(context).textTheme.subtitle.color,
-                              fontFamily: font_regular)),
+                      ).withStyle(color: Theme.of(context).textTheme.subtitle.color, fontFamily: font_regular)),
                     ],
                   ).paddingOnly(top: 8, left: 16, right: 16),
                   Row(
                     children: <Widget>[
-                      Text(keyString(context, "lbl_education"))
-                          .withStyle(
-                              color: Theme.of(context).textTheme.title.color,
-                              fontFamily: font_regular)
-                          .withWidth(200),
+                      Text(keyString(context,"lbl_education")).withStyle(color: Theme.of(context).textTheme.title.color, fontFamily: font_regular).withWidth(200),
                       Expanded(
                           child: Text(
                         widget.authorDetail.education,
                         maxLines: 3,
-                      ).withStyle(
-                              color: Theme.of(context).textTheme.subtitle.color,
-                              fontFamily: font_regular)),
+                      ).withStyle(color: Theme.of(context).textTheme.subtitle.color, fontFamily: font_regular)),
                     ],
                   ).paddingOnly(top: 8, left: 16, right: 16, bottom: 16)
                 ],
@@ -263,15 +211,8 @@ class AuthorDetailScreenState extends State<AuthorDetailScreen>
                       isExpanded = !isExpanded;
                     });
                   },
-                  child: text(
-                          context,
-                          isExpanded
-                              ? keyString(context, "lbl_read_less")
-                              : keyString(context, "lbl_read_more"),
-                          textColor: Theme.of(context).textTheme.title.color,
-                          fontFamily: font_semi_bold)
-                      .paddingOnly(
-                          left: spacing_standard_new, top: spacing_standard))
+                  child: text(context,isExpanded ? keyString(context,"lbl_read_less") : keyString(context,"lbl_read_more"), textColor: Theme.of(context).textTheme.title.color, fontFamily: font_semi_bold)
+                      .paddingOnly(left: spacing_standard_new, top: spacing_standard))
             ],
           ),
         ],
@@ -284,8 +225,7 @@ class AuthorDetailScreenState extends State<AuthorDetailScreen>
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.only(bottom: 70),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: width * 0.5 / width * 1.2),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: width * 0.5 / width * 1.2),
         scrollDirection: Axis.vertical,
         controller: ScrollController(keepScrollOffset: false),
         itemBuilder: (context, index) {
@@ -309,22 +249,19 @@ class AuthorDetailScreenState extends State<AuthorDetailScreen>
           children: <Widget>[
             authorDetail,
             Divider(thickness: 0.8),
-            Stack(
-              children: <Widget>[
-                isLoadingMoreData
-                    ? Column(
-                        children: <Widget>[books, loadingWidgetMaker()],
-                      )
-                    : books,
-                loadingWidgetMaker().visible(list.isEmpty && isLoadingMoreData),
-                Center(
-                  child: text(
-                      context, keyString(context, "error_no_published_book"),
-                      fontSize: ts_extra_normal,
-                      textColor: Theme.of(context).textTheme.title.color),
-                ).paddingTop(30.0).visible(list.isEmpty && !isLoadingMoreData)
-              ],
-            )
+             Stack(
+               children: <Widget>[
+                 isLoadingMoreData ? Column(
+                   children: <Widget>[books, loadingWidgetMaker()],
+                 )
+                     : books,
+                 loadingWidgetMaker().visible(list.isEmpty && isLoadingMoreData),
+                 Center(
+                   child: text(context,keyString(context,"error_no_published_book"),fontSize: ts_extra_normal,textColor: Theme.of(context).textTheme.title.color),
+                 ).paddingTop(30.0).visible(list.isEmpty&& !isLoadingMoreData)
+               ],
+             )
+
           ],
         ),
       ),

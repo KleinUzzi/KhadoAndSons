@@ -2,15 +2,15 @@ import 'package:device_id/device_id.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:KhadoAndSons/models/response/login_response.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/screens/forgot_password.dart';
-import 'package:KhadoAndSons/screens/home_screen.dart';
-import 'package:KhadoAndSons/screens/signup.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/login_response.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/screens/forgot_password.dart';
+import 'package:granth_flutter/screens/home_screen.dart';
+import 'package:granth_flutter/screens/signup.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
@@ -131,9 +131,7 @@ class SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     platfrom = Theme.of(context).platform == TargetPlatform.android
         ? "android"
-        : Theme.of(context).platform == TargetPlatform.iOS
-            ? "ios"
-            : "other";
+        : Theme.of(context).platform == TargetPlatform.iOS ? "ios" : "other";
     changeStatusColor(Theme.of(context).scaffoldBackgroundColor);
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -185,6 +183,7 @@ class SignInState extends State<SignIn> {
                                   maxLines: 1,
                                   focusNode: emailFocus,
                                   textInputAction: TextInputAction.next,
+
                                   keyboardType: TextInputType.emailAddress,
                                   validator: (value) {
                                     return validateEMail(context, value);
@@ -214,8 +213,7 @@ class SignInState extends State<SignIn> {
                                           .color,
                                       fontFamily: font_regular),
                                   onFieldSubmitted: (arg) {
-                                    FocusScope.of(context)
-                                        .requestFocus(passFocus);
+                                    FocusScope.of(context).requestFocus(passFocus);
                                   },
                                 ),
                                 SizedBox(

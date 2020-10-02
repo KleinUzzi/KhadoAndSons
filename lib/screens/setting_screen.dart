@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/app_localizations.dart';
-import 'package:KhadoAndSons/models/language_model.dart';
-import 'package:KhadoAndSons/utils/admob_utils.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/images.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/app_localizations.dart';
+import 'package:granth_flutter/models/language_model.dart';
+import 'package:granth_flutter/utils/admob_utils.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/images.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,17 +33,13 @@ class SettingScreenState extends State<SettingScreen> {
     super.initState();
     init();
     _bannerAd = createBannerAd();
-    _bannerAd
-      ..load()
-      ..show();
+    _bannerAd..load()..show();
   }
 
   init() async {
     pref = await getSharedPref();
-    selectedLanguage = pref.getInt(SELECTED_LANGUAGE_INDEX) != null
-        ? pref.getInt(SELECTED_LANGUAGE_INDEX)
-        : 0;
-    isSwitched = pref.getBool(IS_DARK_THEME) ?? false;
+    selectedLanguage = pref.getInt(SELECTED_LANGUAGE_INDEX) != null ? pref.getInt(SELECTED_LANGUAGE_INDEX) : 0;
+    isSwitched=pref.getBool(IS_DARK_THEME)?? false;
     setState(() {});
   }
 
@@ -52,14 +48,13 @@ class SettingScreenState extends State<SettingScreen> {
     _bannerAd?.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       iconTheme: Theme.of(context).iconTheme,
       centerTitle: true,
-      title: headingText(context, keyString(context, "settings")),
+      title: headingText(context,keyString(context,"settings")),
     );
     final body = Padding(
       padding: EdgeInsets.all(8),
@@ -75,14 +70,13 @@ class SettingScreenState extends State<SettingScreen> {
               Expanded(
                 child: Container(
                   padding: EdgeInsets.all(8),
-                  child: text(context, keyString(context, 'language'),
-                      fontFamily: font_medium,
-                      textColor: Theme.of(context).textTheme.title.color,
-                      fontSize: ts_extra_normal),
+                  child: text(context,keyString(context,'language'),fontFamily: font_medium,textColor: Theme.of(context).textTheme.title.color,fontSize: ts_extra_normal),
                 ),
               ),
               Theme(
-                data: ThemeData(canvasColor: Theme.of(context).cardTheme.color),
+                data: ThemeData(
+                  canvasColor: Theme.of(context).cardTheme.color
+                ),
                 child: DropdownButton(
                   value: Language.getLanguages()[selectedLanguage].name,
                   underline: SizedBox(),
@@ -93,33 +87,20 @@ class SettingScreenState extends State<SettingScreen> {
                           selectedLanguage = i;
                         }
                       }
-                      pref.setString(
-                          SELECTED_LANGUAGE_CODE,
-                          Language.getLanguages()[selectedLanguage]
-                              .languageCode);
+                      pref.setString(SELECTED_LANGUAGE_CODE, Language.getLanguages()[selectedLanguage].languageCode);
                       pref.setInt(SELECTED_LANGUAGE_INDEX, selectedLanguage);
-                      Provider.of<AppState>(context, listen: false)
-                          .changeLocale(Locale(
-                              Language.getLanguages()[selectedLanguage]
-                                  .languageCode,
-                              ''));
-                      Provider.of<AppState>(context, listen: false)
-                          .changeLanguageCode(
-                              Language.getLanguages()[selectedLanguage]
-                                  .languageCode);
+                      Provider.of<AppState>(context, listen: false).changeLocale(Locale(Language.getLanguages()[selectedLanguage].languageCode, ''));
+                      Provider.of<AppState>(context, listen: false).changeLanguageCode(Language.getLanguages()[selectedLanguage].languageCode);
                     });
                   },
+
                   items: Language.getLanguages().map((language) {
                     return DropdownMenuItem(
                       child: Row(
                         children: <Widget>[
                           Image.asset(language.flag, width: 20, height: 20),
                           SizedBox(width: 10),
-                          text(context, language.name,
-                              textColor:
-                                  Theme.of(context).textTheme.title.color,
-                              fontSize: ts_normal,
-                              fontFamily: font_medium),
+                          text(context,language.name,textColor: Theme.of(context).textTheme.title.color,fontSize: ts_normal,fontFamily: font_medium),
                         ],
                       ),
                       value: language.name,
@@ -140,10 +121,7 @@ class SettingScreenState extends State<SettingScreen> {
               Expanded(
                 child: Container(
                   padding: EdgeInsets.all(8),
-                  child: text(context, keyString(context, 'night_mode'),
-                      fontFamily: font_medium,
-                      textColor: Theme.of(context).textTheme.title.color,
-                      fontSize: ts_extra_normal),
+                 child: text(context,keyString(context,'night_mode'),fontFamily: font_medium,textColor: Theme.of(context).textTheme.title.color,fontSize: ts_extra_normal),
                 ),
               ),
               Switch(
@@ -151,10 +129,10 @@ class SettingScreenState extends State<SettingScreen> {
                 onChanged: (value) {
                   setState(() {
                     isSwitched = value;
-                    pref.setBool(IS_DARK_THEME, isSwitched);
-                    Provider.of<AppState>(context, listen: false)
-                        .changeMode(isSwitched);
+                    pref.setBool(IS_DARK_THEME,isSwitched);
+                    Provider.of<AppState>(context, listen: false).changeMode(isSwitched);
                     setState(() {});
+
                   });
                 },
                 activeColor: color_primary_black,
@@ -162,6 +140,7 @@ class SettingScreenState extends State<SettingScreen> {
               SizedBox(width: 5),
             ],
           ),
+
         ],
       ),
     );

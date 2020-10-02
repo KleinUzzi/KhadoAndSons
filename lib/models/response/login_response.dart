@@ -1,4 +1,4 @@
-import 'package:KhadoAndSons/models/response/base_response.dart';
+import 'package:granth_flutter/models/response/base_response.dart';
 
 class LoginResponse {
   LoginData data;
@@ -9,8 +9,8 @@ class LoginResponse {
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
       data: json['data'] != null ? LoginData.fromJson(json['data']) : null,
-      message: json['message'] != null ? json['message'] : "",
-      status: json['status'] != null ? json['status'] : true,
+      message: json['message']!=null?json['message']:"",
+      status: json['status']!=null? json['status']:true,
     );
   }
 

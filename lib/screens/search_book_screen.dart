@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/models/response/book_detail.dart';
-import 'package:KhadoAndSons/models/response/book_list.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/book_list.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:rating_bar/rating_bar.dart';
 import '../app_localizations.dart';
@@ -48,7 +48,7 @@ class _SearchScreenState extends State<SearchScreen>
   final SpeechToText speech = SpeechToText();
   bool isListening = false;
   TextEditingController controller = TextEditingController();
-  var isInitialized = false;
+  var isInitialized=false;
 
   @override
   @override
@@ -104,7 +104,7 @@ class _SearchScreenState extends State<SearchScreen>
     if (!mounted) return;
 
     setState(() {
-      isInitialized = true;
+      isInitialized=true;
       _hasSpeech = hasSpeech;
     });
   }
@@ -135,7 +135,7 @@ class _SearchScreenState extends State<SearchScreen>
           });
         });
       } else {
-        toast(keyString(context, "error_network_no_internet"));
+        toast(keyString(context,"error_network_no_internet"));
       }
     });
   }
@@ -166,16 +166,10 @@ class _SearchScreenState extends State<SearchScreen>
                     child: TextFormField(
                         controller: controller,
                         textInputAction: TextInputAction.search,
-                        style: TextStyle(
-                            fontFamily: font_regular,
-                            fontSize: ts_normal,
-                            color: Theme.of(context).textTheme.title.color),
+                        style: TextStyle(fontFamily: font_regular, fontSize: ts_normal,color: Theme.of(context).textTheme.title.color),
                         decoration: InputDecoration(
                           hintText: 'Search for books',
-                          hintStyle: TextStyle(
-                              fontFamily: font_regular,
-                              color:
-                                  Theme.of(context).textTheme.subtitle.color),
+                          hintStyle: TextStyle(fontFamily: font_regular,color: Theme.of(context).textTheme.subtitle.color),
                           border: InputBorder.none,
                           filled: false,
                         ),
@@ -211,8 +205,7 @@ class _SearchScreenState extends State<SearchScreen>
             onTap: () {
               finish(context);
             },
-            child: text(context, 'Cancel',
-                fontFamily: font_bold, fontSize: ts_normal),
+            child: text(context,'Cancel', fontFamily: font_bold, fontSize: ts_normal),
           )
         ],
       ),
@@ -237,7 +230,7 @@ class _SearchScreenState extends State<SearchScreen>
               width: double.infinity,
               margin: EdgeInsets.fromLTRB(spacing_standard, spacing_control,
                   spacing_standard, spacing_control),
-              /* decoration: boxDecoration(
+             /* decoration: boxDecoration(
                   bgColor: white, showShadow: true, radius: spacing_control),*/
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,16 +253,14 @@ class _SearchScreenState extends State<SearchScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        text(context, bookDetail.name,
-                                textColor:
-                                    Theme.of(context).textTheme.title.color,
+                        text(context,bookDetail.name,
+                                textColor: Theme.of(context).textTheme.title.color,
                                 fontFamily: font_bold,
                                 fontSize: ts_normal,
                                 maxLine: 2)
                             .paddingOnly(
                                 right: spacing_standard, top: spacing_standard),
-                        text(
-                          context,
+                        text(context,
                           bookDetail.authorName,
                         ).paddingOnly(
                             right: spacing_standard, bottom: spacing_standard),
@@ -283,18 +274,14 @@ class _SearchScreenState extends State<SearchScreen>
                               emptyColor: Colors.grey.withOpacity(0.7),
                               size: spacing_standard_new,
                             ),
-                            text(
-                                    context,
-                                    bookDetail.totalReview.toString() +
-                                        ' Reviews')
+                            text(context,bookDetail.totalReview.toString() + ' Reviews')
                                 .paddingOnly(left: spacing_standard)
                                 .visible(bookDetail.totalReview != null),
                           ],
                         ),
                         Row(
                           children: <Widget>[
-                            text(
-                              context,
+                            text(context,
                               bookDetail.discountedPrice != 0
                                   ? bookDetail.discountedPrice
                                       .toString()
@@ -304,20 +291,17 @@ class _SearchScreenState extends State<SearchScreen>
                                       .toCurrencyFormat(),
                               fontSize: ts_extra_normal,
                               fontFamily: font_medium,
-                              textColor:
-                                  Theme.of(context).textTheme.title.color,
+                              textColor: Theme.of(context).textTheme.title.color,
                             ).visible(bookDetail.discountedPrice != 0 ||
                                 bookDetail.price != 0),
-                            text(
-                              context,
+                            text(context,
                               bookDetail.price.toString().toCurrencyFormat(),
                               fontSize: ts_normal,
                               aDecoration: TextDecoration.lineThrough,
                             )
                                 .paddingOnly(left: spacing_standard)
                                 .visible(bookDetail.discount != 0),
-                            text(
-                              context,
+                            text(context,
                               bookDetail.discount.toString() + '% Off',
                               fontFamily: font_medium,
                               fontSize: ts_normal,
@@ -366,17 +350,11 @@ class _SearchScreenState extends State<SearchScreen>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            text(
-                                context,
-                                keyString(context, "error_search") +
-                                    " \"" +
-                                    searchText +
-                                    "\"",
-                                textColor:
-                                    Theme.of(context).textTheme.title.color,
+                            text(context,keyString(context,"error_search")+" \"" + searchText + "\"",
+                                textColor: Theme.of(context).textTheme.title.color,
                                 fontFamily: font_semi_bold,
                                 fontSize: ts_extra_normal),
-                            text(context, keyString(context, "note_search"),
+                            text(context,keyString(context,"note_search"),
                                 fontFamily: font_semi_bold, fontSize: ts_normal)
                           ],
                         ).paddingTop(width * 0.2),
@@ -409,19 +387,13 @@ class _SearchScreenState extends State<SearchScreen>
                               child: Stack(
                                 children: <Widget>[
                                   Align(
-                                    child: text(
-                                            context,
+                                    child: text(context,
                                             speech.isListening
-                                                ? keyString(
-                                                    context, "lbl_listening")
-                                                : keyString(
-                                                    context, "lbl_time_out"),
+                                                ? keyString(context,"lbl_listening")
+                                                : keyString(context,"lbl_time_out"),
                                             fontSize: 24,
                                             fontFamily: font_bold,
-                                            textColor: Theme.of(context)
-                                                .textTheme
-                                                .title
-                                                .color)
+                                            textColor: Theme.of(context).textTheme.title.color)
                                         .paddingAll(spacing_standard_new),
                                     alignment: Alignment.topCenter,
                                   ),
@@ -433,10 +405,7 @@ class _SearchScreenState extends State<SearchScreen>
                                         },
                                         child: Icon(
                                           Icons.clear,
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .title
-                                              .color,
+                                          color: Theme.of(context).textTheme.title.color,
                                           size: 24,
                                         ).paddingAll(spacing_standard_new)),
                                   )
@@ -454,13 +423,9 @@ class _SearchScreenState extends State<SearchScreen>
                                     BoxShadow(
                                         blurRadius: .26,
                                         spreadRadius: level * 3,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary
-                                            .withOpacity(.05))
+                                        color: Theme.of(context).colorScheme.secondary.withOpacity(.05))
                                   ],
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
+                                  color: Theme.of(context).colorScheme.secondary,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(50)),
                                 ),
@@ -514,11 +479,11 @@ class _SearchScreenState extends State<SearchScreen>
   }
 
   void startListening() async {
-    if (!_permissionReady) {
+    if(!_permissionReady){
       _permissionReady = await checkRecordAudioPermission(context);
       return;
     }
-    if (!isInitialized) {
+    if(!isInitialized){
       initSpeechState();
       return;
     }
@@ -585,4 +550,5 @@ class _SearchScreenState extends State<SearchScreen>
       lastStatus = "$status";
     });
   }
+
 }

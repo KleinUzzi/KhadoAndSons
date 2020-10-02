@@ -1,6 +1,6 @@
-//import 'package:KhadoAndSons/utils/downloader/downloader_models.dart';
+//import 'package:granth_flutter/utils/downloader/downloader_models.dart';
 
-import 'package:KhadoAndSons/models/response/downloaded_book.dart';
+import 'package:granth_flutter/models/response/downloaded_book.dart';
 
 class BookDetail {
   var authorName;
@@ -54,36 +54,36 @@ class BookDetail {
       this.title,
       this.topicCover,
       this.totalReview,
-      this.totalRating,
-      this.is_purchase});
+      this.totalRating,this.is_purchase});
 
   factory BookDetail.fromJson(Map<String, dynamic> json) {
     return BookDetail(
-        authorName: json['author_name'],
-        backCover: json['back_cover'] != null ? json['back_cover'] : null,
-        bookId: json['book_id'],
-        categoryName: json['category_name'],
-        dateOfPublication: json['date_of_publication'],
-        description: json['description'],
-        discount: json['discount'],
-        discountedPrice: json['discounted_price'],
-        edition: json['edition'] != null ? json['edition'] : null,
-        filePath: json['file_path'],
-        fileSamplePath: json['file_sample_path'],
-        format: json['format'],
-        frontCover: json['front_cover'],
-        isWishList: json['is_wishlist'] != null ? json['is_wishlist'] : null,
-        keywords: json['keywords'],
-        language: json['language'],
-        name: json['name'],
-        price: json['price'],
-        publisher: json['publisher'],
-        subcategoryName: json['subcategory_name'],
-        title: json['title'],
-        topicCover: json['topic_cover'] != null ? json['topic_cover'] : null,
-        totalReview: json['total_review'],
-        totalRating: json['total_rating'] != null ? json['total_rating'] : 0.0,
-        is_purchase: json['is_purchase'] != null ? json['is_purchase'] : 0);
+      authorName: json['author_name'],
+      backCover: json['back_cover'] != null ? json['back_cover'] : null,
+      bookId: json['book_id'],
+      categoryName: json['category_name'],
+      dateOfPublication: json['date_of_publication'],
+      description: json['description'],
+      discount: json['discount'],
+      discountedPrice: json['discounted_price'],
+      edition: json['edition'] != null ? json['edition'] : null,
+      filePath: json['file_path'],
+      fileSamplePath: json['file_sample_path'],
+      format: json['format'],
+      frontCover: json['front_cover'],
+      isWishList: json['is_wishlist'] != null ? json['is_wishlist'] : null,
+      keywords: json['keywords'],
+      language: json['language'],
+      name: json['name'],
+      price: json['price'],
+      publisher: json['publisher'],
+      subcategoryName: json['subcategory_name'],
+      title: json['title'],
+      topicCover: json['topic_cover'] != null ? json['topic_cover'] : null,
+      totalReview: json['total_review'],
+      totalRating: json['total_rating'] != null ? json['total_rating'] : 0.0,
+      is_purchase: json['is_purchase']!=null? json['is_purchase']:0
+    );
   }
 
   Map<String, dynamic> toJson() {

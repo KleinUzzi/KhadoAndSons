@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/utils/admob_utils.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/images.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/utils/admob_utils.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/images.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import '../app_localizations.dart';
@@ -20,17 +20,13 @@ class _AboutAppState extends State<AboutApp> {
   void initState() {
     super.initState();
     _bannerAd = createBannerAd();
-    _bannerAd
-      ..load()
-      ..show();
+    _bannerAd..load()..show();
   }
-
   @override
   void dispose() {
     _bannerAd?.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,26 +42,14 @@ class _AboutAppState extends State<AboutApp> {
           ).cornerRadiusWithClipRRect(10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(Icons.copyright).paddingOnly(right: 4),
-              text(context, '2020 Granth',
-                  textColor: Theme.of(context).textTheme.title.color)
-            ],
+            children: <Widget>[Icon(Icons.copyright).paddingOnly(right: 4), text(context,'2020 Granth',textColor: Theme.of(context).textTheme.title.color)],
           ).paddingAll(8.0),
-          Text(keyString(context, "app_name"))
-              .withStyle(
-                  fontSize: 16,
-                  color: Theme.of(context).textTheme.title.color,
-                  fontFamily: font_regular,
-                  textDecoration: TextDecoration.underline)
+          Text(keyString(context,"app_name"))
+              .withStyle(fontSize: 16, color: Theme.of(context).textTheme.title.color, fontFamily: font_regular, textDecoration: TextDecoration.underline)
               .paddingOnly(top: 8)
-              .onTap(() {}),
-          Text('V1.0')
-              .withStyle(
-                  fontSize: 16,
-                  color: Theme.of(context).textTheme.title.color,
-                  fontFamily: font_regular)
-              .paddingOnly(top: 16),
+              .onTap(() {
+          }),
+          Text('V1.0').withStyle(fontSize: 16, color: Theme.of(context).textTheme.title.color, fontFamily: font_regular).paddingOnly(top: 16),
         ],
       ),
     );

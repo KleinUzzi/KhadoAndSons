@@ -1,13 +1,14 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/models/response/author.dart';
-import 'package:KhadoAndSons/models/response/author_list.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/author.dart';
+import 'package:granth_flutter/models/response/author_list.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../app_localizations.dart';
@@ -18,67 +19,58 @@ class AuthorsListScreen extends StatefulWidget {
   @override
   AuthorsListScreenState createState() => AuthorsListScreenState();
 }
+class AuthorsListScreenState extends State<AuthorsListScreen> with AfterLayoutMixin<AuthorsListScreen>{
+  var mBestAuthorList=List<AuthorDetail>();
 
-class AuthorsListScreenState extends State<AuthorsListScreen>
-    with AfterLayoutMixin<AuthorsListScreen> {
-  var mBestAuthorList = List<AuthorDetail>();
+  bool isLoading=false;
 
-  bool isLoading = false;
-
-  showLoading(bool show) {
+  showLoading(bool show){
     setState(() {
-      isLoading = show;
+      isLoading=show;
     });
   }
-
-  @override
+   @override
   void initState() {
     super.initState();
   }
-
   @override
   void afterFirstLayout(BuildContext context) {
     fetchAuthorList();
   }
-
-  fetchAuthorList() {
+  fetchAuthorList(){
     isNetworkAvailable().then((bool) {
-      if (bool) {
-        showLoading(true);
+          if(bool){
+            showLoading(true);
 
-        getAuthorList().then((result) {
-          showLoading(false);
+            getAuthorList().then((result){
+              showLoading(false);
 
-          AuthorList list = AuthorList.fromJson(result);
-          if (list != null && list.data != null && list.data.isNotEmpty) {
-            setState(() {
-              mBestAuthorList.addAll(list.data);
+              AuthorList list=AuthorList.fromJson(result);
+              if(list!=null && list.data!=null && list.data.isNotEmpty){
+                setState(() {
+                  mBestAuthorList.addAll(list.data);
+
+                });
+              }
+            }).catchError((error) {
+              showLoading(false);
+
+              toast(error.toString());
             });
+          }else{
+            toast(keyString(context,"error_network_no_internet"));
           }
-        }).catchError((error) {
-          showLoading(false);
-
-          toast(error.toString());
         });
-      } else {
-        toast(keyString(context, "error_network_no_internet"));
-      }
-    });
   }
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
 
-    var authorList = GridView.builder(
+    var authorList= GridView.builder(
       itemCount: mBestAuthorList.length,
       shrinkWrap: true,
-      padding: EdgeInsets.fromLTRB(
-          spacing_standard_new, spacing_standard_new, spacing_standard_new, 70),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: spacing_middle,
-          mainAxisSpacing: spacing_middle),
+      padding: EdgeInsets.fromLTRB( spacing_standard_new,spacing_standard_new,spacing_standard_new,70),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: spacing_middle,mainAxisSpacing: spacing_middle),
       scrollDirection: Axis.vertical,
       controller: ScrollController(keepScrollOffset: false),
       itemBuilder: (context, index) {
@@ -95,17 +87,14 @@ class AuthorsListScreenState extends State<AuthorsListScreen>
               alignment: Alignment.bottomCenter,
               children: <Widget>[
                 InkWell(
-                  child: networkImage(mBestAuthorList[index].image,
-                      fit: BoxFit.fill,
-                      aWidth: double.infinity,
-                      aHeight: double.infinity),
+                  child: networkImage(mBestAuthorList[index].image,fit: BoxFit.fill,aWidth: double.infinity,aHeight: double.infinity),
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => AuthorDetailScreen(
-                                  authorDetail: mBestAuthorList[index],
-                                )));
+                              authorDetail: mBestAuthorList[index],
+                            )));
                   },
                 ),
                 Container(
@@ -113,18 +102,16 @@ class AuthorsListScreenState extends State<AuthorsListScreen>
                   height: 30,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                    colors: [Colors.black, Colors.transparent],
-                    begin: Alignment(2.0, 1.0),
-                    end: Alignment(-2.0, -1.0),
-                  )),
-                  child: text(context, mBestAuthorList[index].name,
-                          textColor: white,
-                          fontFamily: font_medium,
-                          maxLine: 2,
-                          isCentered: true)
+                    gradient: LinearGradient(colors: [Colors.black,Colors.transparent],  begin: Alignment(2.0, 1.0),
+                      end: Alignment(-2.0, -1.0),)
+                  ),
+                  child: text(context,mBestAuthorList[index].name,
+                      textColor: white,
+                      fontFamily: font_medium,
+                      maxLine: 2,
+                      isCentered: true)
                       .paddingOnly(
-                          left: spacing_control, right: spacing_control),
+                      left: spacing_control, right: spacing_control),
                 )
               ],
             ),
@@ -138,11 +125,15 @@ class AuthorsListScreenState extends State<AuthorsListScreen>
         elevation: 0.0,
         centerTitle: true,
         iconTheme: Theme.of(context).iconTheme,
-        title: headingText(context, keyString(context, "lbl_authors")),
+        title: headingText(context,keyString(context,"lbl_authors")),
       ),
       body: Stack(
-        children: <Widget>[authorList, loadingWidgetMaker().visible(isLoading)],
+        children: <Widget>[
+          authorList,
+          loadingWidgetMaker().visible(isLoading)
+        ],
       ),
     );
   }
+
 }

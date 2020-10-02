@@ -1,4 +1,4 @@
-import 'package:KhadoAndSons/models/response/author.dart';
+import 'package:granth_flutter/models/response/author.dart';
 
 class AuthorList {
   List<AuthorDetail> data;
@@ -7,9 +7,7 @@ class AuthorList {
 
   factory AuthorList.fromJson(Map<String, dynamic> json) {
     return AuthorList(
-      data: json['data'] != null
-          ? (json['data'] as List).map((i) => AuthorDetail.fromJson(i)).toList()
-          : null,
+      data: json['data'] != null ? (json['data'] as List).map((i) => AuthorDetail.fromJson(i)).toList() : null,
     );
   }
 

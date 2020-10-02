@@ -1,4 +1,4 @@
-# KhadoAndSons
+# granth_flutter
 
 A new Book selling  Flutter application.
 

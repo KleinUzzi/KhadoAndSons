@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/models/response/book_detail.dart';
-import 'package:KhadoAndSons/models/response/book_rating.dart';
-import 'package:KhadoAndSons/models/response/book_rating_list.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/images.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/book_rating.dart';
+import 'package:granth_flutter/models/response/book_rating_list.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/images.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -63,7 +63,7 @@ class BookReviewsState extends State<BookReviews>
           toast(error.toString());
         });
       } else {
-        toast(keyString(context, "error_network_no_internet"));
+        toast(keyString(context,"error_network_no_internet"));
       }
     });
   }
@@ -143,15 +143,13 @@ class BookReviewsState extends State<BookReviews>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          text(context, bookRating.userName,
+                          text(context,bookRating.userName,
                               fontFamily: font_medium,
-                              textColor:
-                                  Theme.of(context).textTheme.title.color,
+                              textColor: Theme.of(context).textTheme.title.color,
                               fontSize: ts_normal),
                           Row(
                             children: <Widget>[
-                              text(
-                                context,
+                              text(context,
                                 bookRating.createdAt.toString().formatDate(),
                               ),
                               SizedBox(
@@ -165,8 +163,7 @@ class BookReviewsState extends State<BookReviews>
                                     color: Colors.amber,
                                     size: 14,
                                   ),
-                                  text(
-                                      context,
+                                  text(context,
                                       double.parse(bookRating.rating.toString())
                                           .toString(),
                                       textColor: textColorSecondary,
@@ -176,7 +173,7 @@ class BookReviewsState extends State<BookReviews>
                               )
                             ],
                           ),
-                          text(context, bookRating.review ?? "",
+                          text(context,bookRating.review?? "",
                               isLongText: false,
                               maxLine: 3,
                               textColor: textColorSecondary)
@@ -188,7 +185,7 @@ class BookReviewsState extends State<BookReviews>
               );
             })
         : Container();
-    var reviewInfo = Container(
+    var reviewInfo= Container(
       margin: EdgeInsets.all(spacing_standard_new),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,12 +203,10 @@ class BookReviewsState extends State<BookReviews>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 reviewText(widget.bookDetail.totalRating,
-                    size: 28.0, fontSize: 30, fontFamily: font_bold),
-                text(
-                    context,
-                    list.length.toString() +
-                        " " +
-                        keyString(context, "lbl_reviews"),
+                    size: 28.0,
+                    fontSize: 30,
+                    fontFamily: font_bold),
+                text(context,list.length.toString() + " "+keyString(context,"lbl_reviews"),
                     fontSize: ts_normal),
               ],
             ),
@@ -279,13 +274,12 @@ class BookReviewsState extends State<BookReviews>
               floating: false,
               pinned: true,
               backgroundColor: Theme.of(context).cardTheme.color,
-              iconTheme: Theme.of(context).iconTheme,
-              title: headingText(
-                context,
-                keyString(context, "lbl_reviews"),
+              iconTheme:Theme.of(context).iconTheme,
+              title: headingText(context,
+                keyString(context,"lbl_reviews"),
               ),
               flexibleSpace: FlexibleSpaceBar(
-                background: reviewInfo,
+                background:reviewInfo,
               ),
             ),
           ];
@@ -310,14 +304,14 @@ class BookReviewsState extends State<BookReviews>
   }
 
   Widget reviewText(rating,
-      {size = 15.0, fontSize = ts_extra_normal, fontFamily = font_medium}) {
+      {size = 15.0,
+      fontSize = ts_extra_normal,
+      fontFamily = font_medium}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        text(context, rating.toString(),
-            textColor: Theme.of(context).textTheme.title.color,
-            fontFamily: fontFamily,
-            fontSize: fontSize),
+        text(context,rating.toString(),
+            textColor: Theme.of(context).textTheme.title.color, fontFamily: fontFamily, fontSize: fontSize),
         SizedBox(
           width: spacing_control,
         ),

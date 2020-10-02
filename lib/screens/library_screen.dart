@@ -3,19 +3,20 @@ import 'dart:isolate';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/models/response/book_detail.dart';
-import 'package:KhadoAndSons/models/response/book_list.dart';
-import 'package:KhadoAndSons/models/response/downloaded_book.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/database_helper.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/book_list.dart';
+import 'package:granth_flutter/models/response/downloaded_book.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/database_helper.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import '../app_localizations.dart';
+
 
 class LibraryScreen extends StatefulWidget {
   static String tag = '/LibraryScreen';
@@ -34,7 +35,7 @@ class _LibraryScreenState extends State<LibraryScreen>
   bool isUserLoggedIn = false;
   ReceivePort _port = ReceivePort();
   final dbHelper = DatabaseHelper.instance;
-  var isDataLoaded = false;
+  var isDataLoaded=false;
 
   var _permissionReady;
 
@@ -43,6 +44,8 @@ class _LibraryScreenState extends State<LibraryScreen>
       isLoading = show;
     });
   }
+
+
 
   @override
   void dispose() {
@@ -63,6 +66,8 @@ class _LibraryScreenState extends State<LibraryScreen>
 
     fetchData(context);
   }
+
+
 
   void _bindBackgroundIsolate(context) {
     bool isSuccess = IsolateNameServer.registerPortWithName(
@@ -91,12 +96,12 @@ class _LibraryScreenState extends State<LibraryScreen>
     IsolateNameServer.removePortNameMapping('downloader_send_port');
   }
 
-  static void downloadCallback(
-      String id, DownloadTaskStatus status, int progress) {
+  static void downloadCallback(String id, DownloadTaskStatus status,
+      int progress) {
     print(
         'Background Isolate Callback: task ($id) is in status ($status) and process ($progress)');
     final SendPort send =
-        IsolateNameServer.lookupPortByName('downloader_send_port');
+    IsolateNameServer.lookupPortByName('downloader_send_port');
     send.send([id, status, progress]);
   }
 
@@ -113,7 +118,6 @@ class _LibraryScreenState extends State<LibraryScreen>
     }
     return exist;
   }
-
   void fetchData(context) async {
     showLoading(true);
     List<DownloadTask> tasks = await FlutterDownloader.loadTasks();
@@ -140,7 +144,7 @@ class _LibraryScreenState extends State<LibraryScreen>
         sampleList.addAll(samples);
         downloadedList.addAll(downloaded);
       });
-    } else {
+    }else{
       setState(() {
         sampleList.clear();
         downloadedList.clear();
@@ -148,32 +152,32 @@ class _LibraryScreenState extends State<LibraryScreen>
     }
 
     if (isUserLoggedIn) {
-      isNetworkAvailable().then((bool) async {
+      isNetworkAvailable().then((bool) async{
         if (bool) {
           purchasedBookList().then((result) {
             BookListResponse response = BookListResponse.fromJson(result);
-            setString(LIBRARY_DATA, jsonEncode(response));
-            setLibraryData(response, books, tasks);
+            setString(LIBRARY_DATA,jsonEncode(response));
+            setLibraryData(response,books,tasks);
             showLoading(false);
             setState(() {
-              isDataLoaded = true;
+              isDataLoaded=true;
             });
-          }).catchError((error) async {
+          }).catchError((error) async{
             showLoading(false);
             toast(error.toString());
             BookListResponse data = await libraryItems();
-            setLibraryData(data, books, tasks);
+            setLibraryData(data,books,tasks);
           });
         } else {
           BookListResponse data = await libraryItems();
-          setLibraryData(data, books, tasks);
-          toast(keyString(context, "error_network_no_internet"));
+          setLibraryData(data,books,tasks);
+          toast(keyString(context,"error_network_no_internet"));
           showLoading(false);
         }
       });
-    } else {
+    }else{
       setState(() {
-        isDataLoaded = true;
+        isDataLoaded=true;
       });
       showLoading(false);
     }
@@ -181,90 +185,68 @@ class _LibraryScreenState extends State<LibraryScreen>
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
+    width = MediaQuery
+        .of(context)
+        .size
+        .width;
     var purchased = purchasedList.isNotEmpty
-        ? getList(purchasedList, context)
-        : Center(
-            child: text(context, keyString(context, "err_no_books_purchased"),
-                fontSize: ts_extra_normal,
-                textColor: Theme.of(context).textTheme.title.color),
-          ).visible(isDataLoaded);
-    var samples = sampleList.isNotEmpty
-        ? getList(sampleList, context)
-        : Center(
-            child: text(
-                context, keyString(context, "err_no_sample_books_downloaded"),
-                fontSize: ts_extra_normal,
-                textColor: Theme.of(context).textTheme.title.color),
-          ).visible(isDataLoaded);
+        ? getList(purchasedList,context)
+        : Center(child: text(context,keyString(context,"err_no_books_purchased"), fontSize: ts_extra_normal,
+        textColor: Theme.of(context).textTheme.title.color),).visible(isDataLoaded);
+    var samples = sampleList.isNotEmpty ? getList(sampleList,context) : Center(
+      child: text(context,keyString(context,"err_no_sample_books_downloaded"), fontSize: ts_extra_normal,
+          textColor: Theme.of(context).textTheme.title.color),).visible(isDataLoaded);
     var downloaded = downloadedList.isNotEmpty
-        ? getList(downloadedList, context)
-        : Center(
-            child: text(context, keyString(context, "err_no_books_downloaded"),
-                fontSize: ts_extra_normal,
-                textColor: Theme.of(context).textTheme.title.color),
-          ).visible(isDataLoaded);
+        ? getList(downloadedList,context)
+        : Center(child: text(context,keyString(context,"err_no_books_downloaded"), fontSize: ts_extra_normal,
+        textColor: Theme.of(context).textTheme.title.color),).visible(isDataLoaded);
 
     return Container(
+
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Stack(
         children: <Widget>[
           DefaultTabController(
             length: 3,
             child: Scaffold(
-              appBar: isUserLoggedIn
-                  ? AppBar(
-                      backgroundColor:
-                          Theme.of(context).scaffoldBackgroundColor,
-                      iconTheme: Theme.of(context).iconTheme,
-                      centerTitle: true,
-                      bottom: PreferredSize(
-                        preferredSize: Size(double.infinity, 50),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: TabBar(
-                            isScrollable: false,
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            indicatorColor:
-                                Theme.of(context).textTheme.title.color,
-                            labelPadding: EdgeInsets.only(left: 10, right: 10),
-                            tabs: [
-                              Tab(
-                                  child: headingText(context,
-                                      keyString(context, "lbl_samples"))),
-                              Tab(
-                                  child: headingText(context,
-                                      keyString(context, "lbl_purchased"))),
-                              Tab(
-                                  child: headingText(context,
-                                      keyString(context, "lbl_downloaded"))),
-                            ],
-                          ),
-                        ),
+              appBar: isUserLoggedIn ? AppBar(
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  iconTheme: Theme.of(context).iconTheme,
+                  centerTitle: true,
+                  bottom: PreferredSize(
+                    preferredSize: Size(double.infinity, 50),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: TabBar(
+                        isScrollable: false,
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        indicatorColor: Theme.of(context).textTheme.title.color,
+                        labelPadding: EdgeInsets.only(left: 10, right: 10),
+                        tabs: [
+                          Tab(child: headingText(context,keyString(context,"lbl_samples"))),
+                          Tab(child: headingText(context,keyString(context,"lbl_purchased"))),
+                          Tab(child: headingText(context,keyString(context,"lbl_downloaded"))),
+                        ],
                       ),
-                      title: headingText(
-                          context, keyString(context, "lbl_my_library")))
-                  : AppBar(
-                      backgroundColor:
-                          Theme.of(context).scaffoldBackgroundColor,
-                      iconTheme: Theme.of(context).iconTheme,
-                      centerTitle: true,
-                      title: headingText(
-                          context, keyString(context, "lbl_samples"))),
-              body: isUserLoggedIn
-                  ? TabBarView(
-                      children: [
-                        samples,
-                        purchased,
-                        downloaded,
-                      ],
-                    )
-                  : samples,
+                    ),
+                  ),
+                  title: headingText(context,keyString(context,"lbl_my_library"))
+              ) : AppBar(
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  iconTheme: Theme.of(context).iconTheme,
+                  centerTitle: true,
+                  title: headingText(context,keyString(context,"lbl_samples"))
+              ),
+              body: isUserLoggedIn ? TabBarView(
+                children: [
+                  samples,
+                  purchased,
+                  downloaded,
+                ],
+              ) : samples,
             ),
           ),
-          Center(
-            child: loadingWidgetMaker(),
-          ).visible(isLoading)
+          Center(child: loadingWidgetMaker(),).visible(isLoading)
         ],
       ),
     );
@@ -289,27 +271,25 @@ class _LibraryScreenState extends State<LibraryScreen>
         mSampleDownloadTask.taskId = id;
       });
     } else if (mSampleDownloadTask.status == DownloadTaskStatus.complete) {
-      readFile(context, mSampleDownloadTask.mDownloadTask.filename,
+      readFile(context,
+              mSampleDownloadTask.mDownloadTask.filename,
           mSampleDownloadTask.bookName);
     } else {
-      toast(mSampleDownloadTask.bookName +
-          " " +
-          keyString(context, "lbl_is_downloading"));
+      toast(mSampleDownloadTask.bookName +" "+ keyString(context,"lbl_is_downloading"));
     }
   }
 
-  remove(DownloadedBook task, context) async {
+  remove(DownloadedBook task,context) async {
     await delete(task.taskId);
     await dbHelper.delete(task.id);
     fetchData(context);
   }
 
-  Widget getList(List<DownloadedBook> list, context) {
+  Widget getList(List<DownloadedBook> list,context) {
     return GridView.builder(
       itemCount: list.length,
       shrinkWrap: true,
-      padding: EdgeInsets.only(
-          bottom: spacing_standard_new,
+      padding: EdgeInsets.only(bottom: spacing_standard_new,
           top: spacing_standard_new,
           left: spacing_control,
           right: spacing_control),
@@ -337,42 +317,41 @@ class _LibraryScreenState extends State<LibraryScreen>
                         elevation: spacing_control_half,
                         margin: EdgeInsets.all(0),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(spacing_control),
+                          borderRadius: BorderRadius.circular(
+                              spacing_control),
                         ),
-                        child: networkImage(bookDetail.frontCover,
-                            fit: BoxFit.fill)),
-                    aspectRatio: 6 / 9,
+                        child: networkImage(
+                            bookDetail.frontCover,
+                            fit: BoxFit.fill
+                        )),
+                    aspectRatio: 6/9,
                   ),
                   bookDetail.status == DownloadTaskStatus.undefined
                       ? Container(
-                          margin: EdgeInsets.all(spacing_control),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black.withOpacity(0.2)),
-                          padding: EdgeInsets.all(spacing_control),
-                          child: Icon(
-                            Icons.file_download,
-                            size: 14,
-                            color: white,
-                          ))
+                      margin: EdgeInsets.all(spacing_control),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black.withOpacity(0.2)
+                      ),
+                      padding: EdgeInsets.all(spacing_control),
+                      child: Icon(
+                        Icons.file_download, size: 14, color: white,))
                       : bookDetail.status == DownloadTaskStatus.complete
-                          ? InkWell(
-                              onTap: () {
-                                remove(bookDetail, context);
-                              },
-                              child: Container(
-                                  margin: EdgeInsets.all(spacing_control),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.black.withOpacity(0.2)),
-                                  padding: EdgeInsets.all(spacing_control),
-                                  child: Icon(
-                                    Icons.delete,
-                                    size: 14,
-                                    color: Colors.red,
-                                  )),
-                            )
-                          : Container()
+                      ? InkWell(
+                    onTap: () {
+                      remove(bookDetail,context);
+                    },
+                    child: Container(
+                        margin: EdgeInsets.all(spacing_control),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.black.withOpacity(0.2)
+                        ),
+                        padding: EdgeInsets.all(spacing_control),
+                        child: Icon(
+                          Icons.delete, size: 14, color: Colors.red,)),
+                  )
+                      : Container()
                 ],
               ),
             ),
@@ -381,20 +360,16 @@ class _LibraryScreenState extends State<LibraryScreen>
               textAlign: TextAlign.left,
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
-            )
-                .withStyle(
-                    color: Theme.of(context).textTheme.title.color,
-                    fontFamily: font_bold,
-                    fontSize: ts_medium)
-                .paddingOnly(right: 8, bottom: 0, top: 8),
+            ).withStyle(color: Theme.of(context).textTheme.title.color,
+                fontFamily: font_bold,
+                fontSize: ts_medium).paddingOnly(right: 8, bottom: 0, top: 8),
           ],
         ).paddingAll(spacing_control);
       },
     );
   }
 
-  void setLibraryData(BookListResponse response, List<DownloadedBook> books,
-      List<DownloadTask> tasks) {
+  void setLibraryData(BookListResponse response,List<DownloadedBook> books,List<DownloadTask> tasks) {
     var purchased = List<DownloadedBook>();
 
     if (response.data.isNotEmpty) {
@@ -403,7 +378,8 @@ class _LibraryScreenState extends State<LibraryScreen>
         if (books != null && books.isNotEmpty) {
           book = isExists(books, bookDetail);
           if (book.taskId != null) {
-            var task = tasks.firstWhere((task) => task.taskId == book.taskId);
+            var task = tasks.firstWhere((task) =>
+            task.taskId == book.taskId);
             book.mDownloadTask = task;
             book.status = task.status;
           } else {
@@ -422,4 +398,6 @@ class _LibraryScreenState extends State<LibraryScreen>
       });
     }
   }
+
+
 }

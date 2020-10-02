@@ -1,5 +1,5 @@
-import 'package:KhadoAndSons/models/response/book_detail.dart';
-import 'package:KhadoAndSons/models/response/pagination.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/pagination.dart';
 
 class BookListResponse {
   List<BookDetail> data;
@@ -10,13 +10,9 @@ class BookListResponse {
 
   factory BookListResponse.fromJson(Map<String, dynamic> json) {
     return BookListResponse(
-      data: json['data'] != null
-          ? (json['data'] as List).map((i) => BookDetail.fromJson(i)).toList()
-          : null,
+      data: json['data'] != null ? (json['data'] as List).map((i) => BookDetail.fromJson(i)).toList() : null,
       maxPrice: json['max_price'],
-      pagination: json['pagination'] != null
-          ? Pagination.fromJson(json['pagination'])
-          : null,
+      pagination: json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null,
     );
   }
 

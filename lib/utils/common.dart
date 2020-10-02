@@ -3,21 +3,21 @@ import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:KhadoAndSons/models/response/book_detail.dart';
-import 'package:KhadoAndSons/models/response/book_list.dart';
-import 'package:KhadoAndSons/models/response/cart_response.dart';
-import 'package:KhadoAndSons/models/response/downloaded_book.dart';
-import 'package:KhadoAndSons/models/response/notification_payload.dart';
-import 'package:KhadoAndSons/models/response/wishlist_response.dart';
-import 'package:KhadoAndSons/network/common_api_calls.dart';
-import 'package:KhadoAndSons/screens/book_description_screen.dart';
-import 'package:KhadoAndSons/screens/pdf_screen.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/epub_kitty.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/images.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/book_list.dart';
+import 'package:granth_flutter/models/response/cart_response.dart';
+import 'package:granth_flutter/models/response/downloaded_book.dart';
+import 'package:granth_flutter/models/response/notification_payload.dart';
+import 'package:granth_flutter/models/response/wishlist_response.dart';
+import 'package:granth_flutter/network/common_api_calls.dart';
+import 'package:granth_flutter/screens/book_description_screen.dart';
+import 'package:granth_flutter/screens/pdf_screen.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/epub_kitty.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/images.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:html/parser.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:rating_bar/rating_bar.dart';
@@ -32,7 +32,6 @@ import 'package:flutter_svg/svg.dart';
 String parseHtmlString(String htmlString) {
   return parse(htmlString.validate()).body.text;
 }
-
 void launchScreenWithNewTask(context, String tag) {
   Navigator.pushNamedAndRemoveUntil(context, tag, (r) => false);
 }
@@ -83,12 +82,10 @@ Future<ConfirmAction> showConfirmDialog(context) async {
               Container(
                 width: MediaQuery.of(context).size.width - 40,
                 decoration: boxDecoration(context,
-                    bgColor: Theme.of(context).cardTheme.color,
-                    showShadow: false,
-                    radius: spacing_middle),
+                    bgColor: Theme.of(context).cardTheme.color, showShadow: false, radius: spacing_middle),
                 child: Column(
                   children: <Widget>[
-                    text(context, keyString(context, "lbl_rateBook"),
+                    text(context,keyString(context, "lbl_rateBook"),
                             fontSize: 24,
                             fontFamily: font_bold,
                             textColor: Theme.of(context).textTheme.title.color)
@@ -130,11 +127,8 @@ Future<ConfirmAction> showConfirmDialog(context) async {
                         Expanded(
                           child: MaterialButton(
                             textColor: Theme.of(context).textTheme.title.color,
-                            child: text(
-                                context, keyString(context, "aRate_lbl_Cancel"),
-                                fontSize: ts_normal,
-                                textColor:
-                                    Theme.of(context).textTheme.title.color),
+                            child: text(context,keyString(context, "aRate_lbl_Cancel"),
+                                fontSize: ts_normal, textColor: Theme.of(context).textTheme.title.color),
                             shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(5.0),
                               side: BorderSide(color: colorPrimary),
@@ -148,7 +142,7 @@ Future<ConfirmAction> showConfirmDialog(context) async {
                           child: MaterialButton(
                             color: Theme.of(context).textTheme.title.color,
                             textColor: Colors.white,
-                            child: text(context, keyString(context, "lbl_post"),
+                            child: text(context,keyString(context, "lbl_post"),
                                 fontSize: ts_normal, textColor: white),
                             shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(5.0),
@@ -191,14 +185,12 @@ Future<bool> isNetworkAvailable() async {
   return false;
 }
 
-Text headerText(BuildContext context, var text) {
+Text headerText(BuildContext context,var text) {
   return Text(
     text,
     maxLines: 2,
-    style: TextStyle(
-        fontFamily: font_bold,
-        fontSize: 28,
-        color: Theme.of(context).textTheme.title.color),
+    style:
+        TextStyle(fontFamily: font_bold, fontSize: 28, color: Theme.of(context).textTheme.title.color),
   );
 }
 
@@ -223,7 +215,6 @@ Future<List<CartItem>> cartItems() async {
   CartResponse response = CartResponse.fromJson(jsonDecode(data));
   return response.data;
 }
-
 Future<BookListResponse> libraryItems() async {
   var data = await getString(LIBRARY_DATA);
   if (data == null) {
@@ -232,7 +223,6 @@ Future<BookListResponse> libraryItems() async {
   BookListResponse response = BookListResponse.fromJson(jsonDecode(data));
   return response;
 }
-
 Future<List<WishListItem>> wishListItems() async {
   var data = await getString(WISH_LIST_DATA);
   if (data == null) {
@@ -262,16 +252,11 @@ discountedPrice(num amount, num percentage) {
 }
 
 num tryParse(var input) {
-  return _isNumeric(input)
-      ? int.tryParse(input.toString().trim()) ??
-          double.tryParse(input.toString().trim())
-      : null;
+  return _isNumeric(input)?int.tryParse(input.toString().trim()) ?? double.tryParse(input.toString().trim()):null;
 }
-
 bool _isNumeric(var str) {
-  return str == null ? false : double.tryParse(str.toString()) != null;
+  return str == null? false:double.tryParse(str.toString()) != null;
 }
-
 Future<ConfirmAction> showAlertDialog(context, message,
     {title = 'Confirmation'}) {
   return showDialog(
@@ -279,25 +264,23 @@ Future<ConfirmAction> showAlertDialog(context, message,
     builder: (BuildContext context) {
 // return object of type Dialog
       return Theme(
-        data: ThemeData(canvasColor: Theme.of(context).scaffoldBackgroundColor),
+        data: ThemeData(
+          canvasColor: Theme.of(context).scaffoldBackgroundColor
+        ),
         child: AlertDialog(
-          title: headingText(context, title),
-          content: text(context, message, fontSize: ts_medium),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title:  headingText(context,title),
+          content:  text(context,message,fontSize: ts_medium),
+          backgroundColor:Theme.of(context).scaffoldBackgroundColor ,
           actions: <Widget>[
 // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: text(context, "Cancel",
-                  fontFamily: font_medium,
-                  textColor: Theme.of(context).primaryColor),
+              child:  text(context,"Cancel",fontFamily: font_medium,textColor: Theme.of(context).primaryColor),
               onPressed: () {
                 Navigator.of(context).pop(ConfirmAction.CANCEL);
               },
             ),
             new FlatButton(
-              child: text(context, "OK",
-                  fontFamily: font_medium,
-                  textColor: Theme.of(context).primaryColor),
+              child:  text(context,"OK",fontFamily: font_medium,textColor: Theme.of(context).primaryColor),
               onPressed: () {
                 Navigator.of(context).pop(ConfirmAction.ACCEPT);
               },
@@ -381,25 +364,22 @@ String getFileName(String path, bool isSample, String bookId) {
       : bookId + "_purchased_" + fileNameNew;
 }
 
-readFile(context, String filePath, String name) async {
+readFile(context, String filePath, String name) async{
   String path = await localPath;
-  filePath = path + "/" + filePath;
+  filePath=path + "/" +filePath;
   print(filePath);
-  filePath = filePath.replaceAll("null/", "");
+  filePath=filePath.replaceAll("null/", "");
   if (filePath.contains(".pdf")) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => PDFScreen(filePath, name)));
+    Navigator.push(context,MaterialPageRoute(builder: (context) => PDFScreen(filePath, name)));
   } else if (filePath.contains(".epub")) {
-    if (Platform.isAndroid) {
-      EpubKitty.setConfig(
-          "book",
-          '#${Theme.of(context).primaryColor.value.toRadixString(16)}',
-          "vertical",
-          true);
+    if(Platform.isAndroid) {
+      EpubKitty.setConfig("book", '#${Theme.of(context).primaryColor.value.toRadixString(16)}', "vertical", true);
       EpubKitty.open(filePath);
-    } else if (Platform.isIOS) {
+    }else if(Platform.isIOS) {
       EpubKitty.open(filePath);
-    } else {}
+    }else {
+
+    }
   } else if (filePath.contains(".mp4")) {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => VideoApp(filePath)));
@@ -494,7 +474,8 @@ Future<void> initOneSingalPlatformState(BuildContext context) async {
       .setInFocusDisplayType(OSNotificationDisplayType.notification);
 }
 
-showTransactionDialog(context, isSuccess) {
+
+showTransactionDialog(context,isSuccess){
   showDialog(
     context: context,
     builder: (BuildContext context) => Dialog(
@@ -505,67 +486,45 @@ showTransactionDialog(context, isSuccess) {
       backgroundColor: Colors.transparent,
       child: Container(
           decoration: boxDecoration(context,
-              bgColor: Theme.of(context).cardTheme.color,
-              showShadow: false,
-              radius: spacing_middle),
-          width: MediaQuery.of(context).size.width - 40,
+              bgColor: Theme.of(context).cardTheme.color, showShadow: false, radius: spacing_middle),
+          width: MediaQuery.of(context).size.width-40,
           child: Column(
             mainAxisSize: MainAxisSize.min, // To make the card compact
             children: <Widget>[
               GestureDetector(
-                onTap: () {
+                onTap: (){
                   Navigator.pop(context);
                 },
                 child: Container(
                     padding: EdgeInsets.all(16),
                     alignment: Alignment.centerRight,
-                    child: Icon(Icons.close,
-                        color: Theme.of(context).iconTheme.color)),
+                    child: Icon(Icons.close, color: Theme.of(context).iconTheme.color)),
               ),
-              text(context, isSuccess ? "SUCCESSFUL" : "UNSUCCESSFUL",
-                  textColor:
-                      isSuccess ? Colors.green : Theme.of(context).errorColor,
+              text(context,isSuccess?"SUCCESSFUL":"UNSUCCESSFUL",textColor: isSuccess?Colors.green:Theme.of(context).errorColor,
                   fontFamily: font_bold,
                   fontSize: ts_large),
               SizedBox(height: 16),
               SvgPicture.asset(
                 ic_pay_1,
-                color: isSuccess ? Colors.green : Theme.of(context).errorColor,
+                color: isSuccess?Colors.green:Theme.of(context).errorColor,
                 width: 90,
                 height: 90,
               ),
               SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
-                child: text(
-                    context,
-                    isSuccess
-                        ? "Your payment is apporved"
-                        : "Your payment is declined",
-                    textColor: Theme.of(context).textTheme.title.color,
-                    fontSize: ts_extra_normal,
-                    maxLine: 2,
-                    isCentered: true,
-                    fontFamily: font_bold),
+                child: text(context,isSuccess?"Your payment is apporved":"Your payment is declined",textColor: Theme.of(context).textTheme.title.color,
+                    fontSize: ts_extra_normal, maxLine: 2, isCentered: true,fontFamily: font_bold),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
-                child: text(
-                    context, "Plese refer transaction history for more detail",
-                    textColor: Theme.of(context).textTheme.title.color,
-                    fontSize: ts_normal,
-                    maxLine: 2,
-                    isCentered: true),
+                child: text(context,"Plese refer transaction history for more detail",textColor: Theme.of(context).textTheme.title.color,
+                    fontSize: ts_normal, maxLine: 2, isCentered: true),
               ),
               SizedBox(height: 16),
               MaterialButton(
-                child: text(context, "OK",
-                    textColor: white,
-                    fontSize: ts_normal,
-                    fontFamily: font_medium),
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(spacing_control))),
+                child: text(context,"OK", textColor: white, fontSize: ts_normal, fontFamily: font_medium),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(spacing_control))),
                 elevation: 5.0,
                 minWidth: 150,
                 height: 40,
@@ -574,9 +533,7 @@ showTransactionDialog(context, isSuccess) {
                   finish(context);
                 },
               ),
-              SizedBox(
-                height: 16,
-              )
+              SizedBox(height: 16,)
             ],
           )),
     ),

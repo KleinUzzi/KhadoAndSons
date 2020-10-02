@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/models/response/base_response.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/base_response.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
 
 import '../app_localizations.dart';
 
@@ -57,14 +57,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           showLoading(false);
         });
       } else {
-        toast(keyString(context, "error_network_no_internet"));
+        toast(keyString(context,"error_network_no_internet"));
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var form = Form(
+    var form= Form(
       key: _formKey,
       autovalidate: _autoValidate,
       child: Column(
@@ -77,21 +77,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   fontSize: ts_normal,
                   color: Theme.of(context).textTheme.title.color,
                   fontFamily: font_regular),
-              validator: (value) {
-                return validatePassword(context, value);
+              validator: (value){
+                return validatePassword(context,value);
               },
               onSaved: (String value) {
                 oldPassword = value;
               },
               focusNode: oldPassFocus,
-              onFieldSubmitted: (arg) {
+              onFieldSubmitted:  (arg) {
                 FocusScope.of(context).requestFocus(newPassFocus);
               },
               textInputAction: TextInputAction.next,
+
               decoration: new InputDecoration(
                 focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      color: Theme.of(context).textTheme.title.color),
+                  borderSide: BorderSide(color: Theme.of(context).textTheme.title.color),
                 ),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
@@ -100,7 +100,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 labelStyle: TextStyle(
                     fontSize: ts_normal,
                     color: Theme.of(context).textTheme.title.color),
-                labelText: keyString(context, "label_enter_old_password"),
+                labelText: keyString(context,"label_enter_old_password"),
                 contentPadding: new EdgeInsets.only(bottom: 2.0),
                 suffixIcon: new GestureDetector(
                   onTap: () {
@@ -124,17 +124,18 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   fontSize: ts_normal,
                   color: Theme.of(context).textTheme.title.color,
                   fontFamily: font_regular),
-              validator: (value) {
-                return validatePassword(context, value);
+              validator: (value){
+                return validatePassword(context,value);
               },
               onSaved: (String value) {
                 newPassword = value;
               },
               focusNode: newPassFocus,
-              onFieldSubmitted: (arg) {
+              onFieldSubmitted:  (arg) {
                 FocusScope.of(context).requestFocus(confirmPassFocus);
               },
               textInputAction: TextInputAction.next,
+
               decoration: new InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Theme.of(context).primaryColor),
@@ -146,7 +147,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 labelStyle: TextStyle(
                     fontSize: ts_normal,
                     color: Theme.of(context).textTheme.title.color),
-                labelText: keyString(context, "hint_enter_your_new_password"),
+                labelText: keyString(context,"hint_enter_your_new_password"),
                 contentPadding: new EdgeInsets.only(bottom: 2.0),
                 suffixIcon: new GestureDetector(
                   onTap: () {
@@ -171,14 +172,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   fontFamily: font_regular),
               validator: (value) {
                 if (value.isEmpty) {
-                  return keyString(context, "error_confirm_password_required");
+                  return keyString(context,"error_confirm_password_required");
                 }
                 return _controller.text == value
                     ? null
-                    : keyString(context, "error_password_not_match");
+                    : keyString(context,"error_password_not_match");
               },
               focusNode: confirmPassFocus,
+
               decoration: new InputDecoration(
+
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Theme.of(context).primaryColor),
                 ),
@@ -189,9 +192,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 labelStyle: TextStyle(
                     fontSize: ts_normal,
                     color: Theme.of(context).textTheme.title.color),
-                labelText: keyString(context, "hint_confirm_your_new_password"),
-                contentPadding:
-                    EdgeInsets.only(bottom: 2.0, top: spacing_control),
+                labelText: keyString(context,"hint_confirm_your_new_password"),
+                contentPadding: EdgeInsets.only(
+                    bottom: 2.0, top: spacing_control),
                 suffixIcon: new GestureDetector(
                   onTap: () {
                     setState(() {
@@ -212,7 +215,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         elevation: 0.0,
         centerTitle: true,
         iconTheme: Theme.of(context).iconTheme,
-        title: headingText(context, keyString(context, "lbl_change_password")),
+        title: headingText(context,keyString(context,"lbl_change_password")),
       ),
       body: Stack(
         children: <Widget>[
@@ -222,12 +225,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  form,
+                 form,
                   SizedBox(
                     height: 50,
                   ),
                   AppButton(
-                      textContent: keyString(context, "lbl_change_password"),
+                      textContent: keyString(context,"lbl_change_password"),
                       onPressed: () {
                         final form = _formKey.currentState;
                         if (form.validate()) {

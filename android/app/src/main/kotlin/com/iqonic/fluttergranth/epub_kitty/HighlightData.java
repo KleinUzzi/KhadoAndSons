@@ -1,4 +1,4 @@
-package net.awesometechno.khadoandsons.epub_kitty;
+package com.iqonic.fluttergranth.epub_kitty;
 
 import com.folioreader.model.HighLight;
 

@@ -1,16 +1,14 @@
-import 'package:KhadoAndSons/models/response/base_response.dart';
-import 'package:KhadoAndSons/models/response/book_rating.dart';
+import 'package:granth_flutter/models/response/base_response.dart';
+import 'package:granth_flutter/models/response/book_rating.dart';
 
-class BookRatingList {
+class BookRatingList  {
   List<BookRating> data;
 
   BookRatingList({this.data});
 
   factory BookRatingList.fromJson(Map<String, dynamic> json) {
     return BookRatingList(
-      data: json['data'] != null
-          ? (json['data'] as List).map((i) => BookRating.fromJson(i)).toList()
-          : null,
+      data: json['data'] != null ? (json['data'] as List).map((i) => BookRating.fromJson(i)).toList() : null,
     );
   }
 

@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:KhadoAndSons/models/response/base_response.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/screens/verify_otp.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/base_response.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/screens/verify_otp.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../app_localizations.dart';
@@ -30,6 +30,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
     super.initState();
   }
 
+
   bool isLoading = false;
 
   showLoading(bool show) {
@@ -41,16 +42,16 @@ class ForgotPasswordState extends State<ForgotPassword> {
   void forgotPassword(BuildContext context) async {
     isNetworkAvailable().then((bool) {
       if (bool) {
-        var request = {"email": email};
+        var request = {
+          "email": email
+        };
         showLoading(true);
         sendForgotPasswordRequest(request).then((result) {
           showLoading(false);
           BaseResponse response = BaseResponse.fromJson(result);
           if (response.status) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => VerifyOTPScreen(email: email)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => VerifyOTPScreen(email: email)));
+
           } else {
             toast(response.message);
           }
@@ -59,7 +60,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
           toast(error.toString());
         });
       } else {
-        toast(keyString(context, "error_network_no_internet"));
+        toast(keyString(context,"error_network_no_internet"));
       }
     });
   }
@@ -82,7 +83,10 @@ class ForgotPasswordState extends State<ForgotPassword> {
                       child: Container(
                         padding: EdgeInsets.only(left: spacing_control),
                         alignment: Alignment.centerLeft,
-                        width: MediaQuery.of(context).size.width,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
                         height: 50,
                         child: IconButton(
                           icon: Icon(Icons.arrow_back),
@@ -92,22 +96,20 @@ class ForgotPasswordState extends State<ForgotPassword> {
                         ),
                       ),
                     ),
-                    headerText(
-                            context, keyString(context, "lbl_forget_password"))
-                        .paddingOnly(
-                            left: 20,
-                            top: spacing_standard_new,
-                            bottom: spacing_standard_new),
-                    text(context,
-                            keyString(context, "txt_about_forgot_password"),
-                            isLongText: true, fontSize: ts_normal)
-                        .paddingOnly(
-                            left: 20, right: 20, bottom: spacing_standard_new),
+                    headerText(context,keyString(context,"lbl_forget_password")).paddingOnly(
+                        left: 20,
+                        top: spacing_standard_new,
+                        bottom: spacing_standard_new),
+                    text(context,keyString(context,"txt_about_forgot_password"), isLongText: true,
+                        fontSize: ts_normal).paddingOnly(
+                        left: 20, right: 20,
+                        bottom: spacing_standard_new),
                     Padding(
                       padding: EdgeInsets.only(top: 20, bottom: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
+
                           Form(
                             key: _formKey,
                             autovalidate: _autoValidate,
@@ -115,48 +117,42 @@ class ForgotPasswordState extends State<ForgotPassword> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 TextFormField(
-                                  cursorColor:
-                                      Theme.of(context).textTheme.title.color,
+                                  cursorColor: Theme.of(context).textTheme.title.color,
                                   maxLines: 1,
                                   keyboardType: TextInputType.emailAddress,
-                                  validator: (value) {
-                                    return validateEMail(context, value);
+                                  validator: (value){
+                                    return validateEMail(context,value);
                                   },
                                   onSaved: (String value) {
                                     email = value;
                                   },
+
                                   decoration: InputDecoration(
                                     focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .title
-                                              .color),
+                                      borderSide:
+                                      BorderSide(color: Theme.of(context).textTheme.title.color),
                                     ),
-                                    labelText: keyString(context, "hint_email"),
+                                    labelText: keyString(context,"hint_email"),
                                     labelStyle: TextStyle(
                                         fontSize: ts_normal,
                                         color: textColorSecondary),
                                     contentPadding:
-                                        new EdgeInsets.only(bottom: 2.0),
+                                    new EdgeInsets.only(bottom: 2.0),
                                   ),
                                   style: TextStyle(
                                       fontSize: ts_normal,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .title
-                                          .color,
+                                      color: Theme.of(context).textTheme.title.color,
                                       fontFamily: font_regular),
                                 ),
                               ],
                             ),
                           ).paddingOnly(left: 20, right: 20),
+
                           SizedBox(
                             height: 50,
                           ),
                           AppButton(
-                              textContent:
-                                  keyString(context, "text_send_request"),
+                              textContent: keyString(context,"text_send_request"),
                               onPressed: () {
                                 if (isLoading) {
                                   return;

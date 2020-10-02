@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/models/response/book_detail.dart';
-import 'package:KhadoAndSons/models/response/wishlist_response.dart';
-import 'package:KhadoAndSons/network/common_api_calls.dart';
-import 'package:KhadoAndSons/screens/book_description_screen.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/wishlist_response.dart';
+import 'package:granth_flutter/network/common_api_calls.dart';
+import 'package:granth_flutter/screens/book_description_screen.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../app_localizations.dart';
 
@@ -29,7 +29,7 @@ class _WishlistScreenState extends State<WishlistScreen>
   @override
   void afterFirstLayout(BuildContext context) async {
     if (mIsFirstTime) {
-      liveStream = LiveStream();
+      liveStream= LiveStream();
       var wishListItemList = await wishListItems();
       isUserLogin = await getBool(IS_LOGGED_IN);
       var count = await getInt(CART_COUNT);
@@ -40,14 +40,13 @@ class _WishlistScreenState extends State<WishlistScreen>
         }
       });
       liveStream.on(WISH_LIST_DATA_CHANGED, (value) {
-        if (mounted) {
+        if(mounted){
           if (value != null) {
             setState(() {
               list.clear();
               list.addAll(value);
             });
-          }
-        }
+          }}
       });
       liveStream.on(CART_COUNT_ACTION, (value) {
         if (!mounted) {
@@ -70,9 +69,8 @@ class _WishlistScreenState extends State<WishlistScreen>
       actions: <Widget>[cartIcon(context, cartCount).visible(isUserLogin)],
       title: Column(
         children: <Widget>[
-          headingText(context, keyString(context, "lbl_wish_list"))
-              .paddingTop(spacing_standard_new),
-          Text(list.length.toString() + ' ' + keyString(context, "lbl_books"))
+          headingText(context,keyString(context,"lbl_wish_list")).paddingTop(spacing_standard_new),
+          Text(list.length.toString() + ' '+keyString(context,"lbl_books"))
               .withStyle(
                   fontSize: ts_medium,
                   fontFamily: font_regular,
@@ -93,7 +91,7 @@ class _WishlistScreenState extends State<WishlistScreen>
             top: spacing_control),
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 9 / 19),
+            crossAxisCount: 3, childAspectRatio:9/19),
         scrollDirection: Axis.vertical,
         controller: ScrollController(keepScrollOffset: false),
         itemBuilder: (context, index) {
@@ -112,7 +110,7 @@ class _WishlistScreenState extends State<WishlistScreen>
                                   BookDetail(bookId: bookDetail.book_id))));
                 },
                 child: AspectRatio(
-                  aspectRatio: 6 / 9,
+                  aspectRatio: 6/9,
                   child: Card(
                     semanticContainer: true,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -152,40 +150,20 @@ class _WishlistScreenState extends State<WishlistScreen>
                   Expanded(
                     child: Wrap(
                       children: <Widget>[
-                        text(
-                                context,
-                                bookDetail.discount != 0
-                                    ? discountedPrice(
-                                            tryParse(bookDetail.price),
-                                            tryParse(bookDetail.discount))
-                                        .toString()
-                                        .toCurrencyFormat()
-                                    : bookDetail.price
-                                        .toString()
-                                        .toCurrencyFormat(),
-                                textColor:
-                                    Theme.of(context).textTheme.title.color,
-                                fontFamily: font_medium)
-                            .visible(bookDetail.price != 0),
+                        text(context,bookDetail.discount != 0 ? discountedPrice(tryParse(bookDetail.price), tryParse(bookDetail.discount)).toString().toCurrencyFormat() : bookDetail.price.toString().toCurrencyFormat(), textColor: Theme.of(context).textTheme.title.color, fontFamily: font_medium).visible(bookDetail.price != 0),
                         text(context,
-                                bookDetail.price.toString().toCurrencyFormat(),
-                                aDecoration: TextDecoration.lineThrough,
-                                fontSize: ts_medium_small)
-                            .paddingOnly(left: spacing_control_half)
-                            .visible(bookDetail.discount != 0),
+                          bookDetail.price.toString().toCurrencyFormat(),
+                          aDecoration: TextDecoration.lineThrough,
+                          fontSize: ts_medium_small
+                        ).paddingOnly(left: spacing_control_half).visible(bookDetail.discount != 0),
                       ],
                     ),
                   ),
                   InkWell(
-                      onTap: () {
-                        addBookToCart(context, bookDetail.book_id,
-                            removeFromWishList: true);
-                      },
-                      child: Icon(
-                        Icons.add_shopping_cart,
-                        color: textColorSecondary,
-                        size: 18,
-                      )).visible(bookDetail.price != 0)
+                    onTap: (){
+                     addBookToCart(context,bookDetail.book_id,removeFromWishList: true);
+                    },
+                      child: Icon(Icons.add_shopping_cart,color: textColorSecondary,size: 18,)).visible(bookDetail.price!=0)
                 ],
               )
             ],

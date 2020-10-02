@@ -3,7 +3,7 @@ import 'dart:convert';
 import "dart:core";
 import 'dart:io';
 
-import 'package:KhadoAndSons/utils/constants.dart';
+import 'package:granth_flutter/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
 
@@ -53,8 +53,7 @@ class GranthAPI {
     print(jsonEncode(data));
 
     var client = new http.Client();
-    var response =
-        await client.post(url, body: jsonEncode(data), headers: headers);
+    var response = await client.post(url, body: jsonEncode(data), headers: headers);
 
     print(response.statusCode);
     print(jsonDecode(response.body));

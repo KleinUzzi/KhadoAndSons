@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_admob/firebase_admob.dart';
-import 'package:KhadoAndSons/utils/resources/strings.dart';
+import 'package:granth_flutter/utils/resources/strings.dart';
 
 const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
   keywords: <String>['foo', 'bar'],
@@ -12,7 +12,7 @@ const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
 
 BannerAd createBannerAd() {
   return BannerAd(
-    adUnitId: Platform.isAndroid ? android_banner_id : ios_banner_id,
+    adUnitId: Platform.isAndroid?android_banner_id:ios_banner_id,
     size: AdSize.banner,
     targetingInfo: targetingInfo,
     listener: (MobileAdEvent event) {
@@ -20,11 +20,9 @@ BannerAd createBannerAd() {
     },
   );
 }
-
 InterstitialAd createInterstitialAd() {
   return InterstitialAd(
-    adUnitId:
-        Platform.isAndroid ? android_interstitial_id : ios_interstitial_id,
+    adUnitId: Platform.isAndroid?android_interstitial_id:ios_interstitial_id,
     targetingInfo: targetingInfo,
     listener: (MobileAdEvent event) {
       print("InterstitialAd event $event");

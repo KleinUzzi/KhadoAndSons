@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
 
 class AppTheme {
   //
@@ -12,8 +12,9 @@ class AppTheme {
     primaryColorDark: colorPrimaryDark,
     errorColor: Colors.red,
     hoverColor: Colors.grey,
+
     appBarTheme: AppBarTheme(
-      color: app_background,
+      color:app_background,
       iconTheme: IconThemeData(
         color: textColorPrimary,
       ),
@@ -28,16 +29,19 @@ class AppTheme {
       color: Colors.white,
     ),
     iconTheme: IconThemeData(
-      color: textColorPrimary,
+      color:textColorPrimary,
     ),
     textTheme: TextTheme(
-      button: TextStyle(color: Colors.blueAccent),
+      button: TextStyle(
+        color: Colors.blueAccent
+      ),
       title: TextStyle(
         color: textColorPrimary,
       ),
       subtitle: TextStyle(
         color: textColorSecondary,
       ),
+
     ),
   );
 
@@ -55,24 +59,26 @@ class AppTheme {
     primaryColorDark: color_primary_black,
     hoverColor: Colors.black,
     colorScheme: ColorScheme.light(
-      primary: app_background_black,
+      primary:app_background_black,
       onPrimary: card_background_black,
-      primaryVariant: color_primary_black,
+      primaryVariant:color_primary_black,
       secondary: Colors.pinkAccent,
     ),
     cardTheme: CardTheme(
       color: card_background_black,
     ),
     iconTheme: IconThemeData(
-      color: Colors.white70,
+      color:Colors.white70,
     ),
     textTheme: TextTheme(
-      button: TextStyle(color: color_primary_black),
+      button: TextStyle(
+          color: color_primary_black
+      ),
       title: TextStyle(
         color: Colors.white70,
       ),
       subtitle: TextStyle(
-        color: Colors.white54,
+        color:Colors.white54,
       ),
     ),
   );

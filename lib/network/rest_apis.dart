@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:KhadoAndSons/models/response/login_response.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/network_utils.dart';
+import 'package:granth_flutter/models/response/login_response.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/network_utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
 
@@ -35,9 +35,9 @@ Future searchBook(page, searchText) async {
       await getRequest('book-list?page=$page&search_text=$searchText'));
 }
 
-Future getCategoryWiseBookDetail(page, categoryId, subCategoryId) async {
-  return handleResponse(await getRequest(
-      'book-list?page=$page&category_id=$categoryId&subcategory_id=$subCategoryId'));
+Future getCategoryWiseBookDetail(page, categoryId,subCategoryId) async {
+  return handleResponse(
+      await getRequest('book-list?page=$page&category_id=$categoryId&subcategory_id=$subCategoryId'));
 }
 
 Future getAuthorList() async {
@@ -177,8 +177,7 @@ Future getChecksum(request) async {
   return handleResponse(await postRequest('generate-check-sum', request));
 }
 
-Future saveTransaction(
-    Map<String, String> transactionDetails, orderDetails, type, status) async {
+Future saveTransaction(Map<String, String> transactionDetails, orderDetails, type, status) async {
   print('transaction_detail' + jsonEncode(transactionDetails));
   print('order_detail' + jsonEncode(orderDetails));
   print('type' + type.toString());
@@ -192,9 +191,9 @@ Future saveTransaction(
   request.headers.addAll(await buildTokenHeader());
   await request.send().then((res) {
     print(res.statusCode);
-    if (transactionDetails['STATUS'] == "TXN_SUCCESS") {
+    if(transactionDetails['STATUS']=="TXN_SUCCESS"){
       toast("Transaction Successfull.");
-    } else {
+    }else{
       toast("Transaction Failed.");
     }
     LiveStream().emit(CART_ITEM_CHANGED, true);
@@ -225,6 +224,8 @@ Future generateClientToken() async {
 
 Future savePayPalTransaction(request) async {
   print(jsonEncode(request));
-  return handleResponse(
-      await postRequest('braintree-payment-process', request));
+  return handleResponse(await postRequest('braintree-payment-process', request));
 }
+
+
+

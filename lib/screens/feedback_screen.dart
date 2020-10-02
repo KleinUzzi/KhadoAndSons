@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/models/response/base_response.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/models/response/base_response.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../app_localizations.dart';
@@ -39,7 +39,7 @@ class _FeedbackScreenState extends State<FeedbackScreen>
   }
 
   feedBack(context) async {
-    if (isLoading) {
+    if(isLoading){
       return;
     }
     var email = await getString(USER_EMAIL);
@@ -61,7 +61,7 @@ class _FeedbackScreenState extends State<FeedbackScreen>
           toast(error.toString());
         });
       } else {
-        toast(keyString(context, "error_network_no_internet"));
+        toast(keyString(context,"error_network_no_internet"));
       }
     });
   }
@@ -85,7 +85,7 @@ class _FeedbackScreenState extends State<FeedbackScreen>
 
   @override
   Widget build(BuildContext context) {
-    var form = Form(
+    var form=  Form(
       key: _formKey,
       autovalidate: _autoValidate,
       child: Column(
@@ -95,32 +95,30 @@ class _FeedbackScreenState extends State<FeedbackScreen>
             controller: nameController,
             cursorColor: Theme.of(context).textTheme.title.color,
             validator: (value) {
-              return value.isEmpty
-                  ? keyString(context, "error_name_required")
-                  : null;
+              return value.isEmpty ? keyString(context,"error_name_required") : null;
             },
             onSaved: (String value) {
               name = value;
             },
             focusNode: nameFocus,
-            onFieldSubmitted: (arg) {
+            onFieldSubmitted:  (arg) {
               FocusScope.of(context).requestFocus(emailFocus);
             },
             textInputAction: TextInputAction.next,
+
             decoration: InputDecoration(
-              labelText: keyString(context, "hint_name"),
+              labelText: keyString(context,"hint_name"),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
               ),
               enabledBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: Theme.of(context).textTheme.title.color),
+                borderSide: BorderSide(
+                    color: Theme.of(context).textTheme.title.color),
               ),
               labelStyle: TextStyle(
                   fontSize: ts_normal,
                   color: Theme.of(context).textTheme.title.color),
-              contentPadding:
-                  EdgeInsets.only(bottom: 2.0, top: spacing_control),
+              contentPadding: EdgeInsets.only(bottom: 2.0, top: spacing_control),
             ),
             style: TextStyle(
                 fontSize: ts_normal,
@@ -135,31 +133,31 @@ class _FeedbackScreenState extends State<FeedbackScreen>
             cursorColor: Theme.of(context).textTheme.title.color,
             maxLines: 1,
             keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              return validateEMail(context, value);
+            validator: (value){
+              return validateEMail(context,value);
             },
             onSaved: (String value) {
               email = value;
             },
             focusNode: emailFocus,
-            onFieldSubmitted: (arg) {
+            onFieldSubmitted:  (arg) {
               FocusScope.of(context).requestFocus(messagesFocus);
             },
             textInputAction: TextInputAction.next,
+
             decoration: InputDecoration(
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
               ),
               enabledBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: Theme.of(context).textTheme.title.color),
+                borderSide: BorderSide(
+                    color: Theme.of(context).textTheme.title.color),
               ),
               labelStyle: TextStyle(
                   fontSize: ts_normal,
                   color: Theme.of(context).textTheme.title.color),
-              contentPadding:
-                  EdgeInsets.only(bottom: 2.0, top: spacing_control),
-              labelText: keyString(context, "hint_email"),
+              contentPadding: EdgeInsets.only(bottom: 2.0, top: spacing_control),
+              labelText: keyString(context,"hint_email"),
             ),
             style: TextStyle(
                 fontSize: ts_normal,
@@ -174,9 +172,7 @@ class _FeedbackScreenState extends State<FeedbackScreen>
             maxLines: 1,
             keyboardType: TextInputType.multiline,
             validator: (value) {
-              return value.isEmpty
-                  ? keyString(context, "error_name_required")
-                  : null;
+              return value.isEmpty ? keyString(context,"error_name_required") : null;
             },
             onSaved: (String value) {
               message = value;
@@ -184,19 +180,19 @@ class _FeedbackScreenState extends State<FeedbackScreen>
             textInputAction: TextInputAction.next,
             focusNode: messagesFocus,
             decoration: InputDecoration(
+
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
               ),
               enabledBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: Theme.of(context).textTheme.title.color),
+                borderSide: BorderSide(
+                    color: Theme.of(context).textTheme.title.color),
               ),
               labelStyle: TextStyle(
                   fontSize: ts_normal,
                   color: Theme.of(context).textTheme.title.color),
-              contentPadding:
-                  EdgeInsets.only(bottom: 2.0, top: spacing_control),
-              labelText: keyString(context, "hint_message"),
+              contentPadding: EdgeInsets.only(bottom: 2.0, top: spacing_control),
+              labelText: keyString(context,"hint_message"),
             ),
             style: TextStyle(
                 fontSize: ts_normal,
@@ -212,7 +208,7 @@ class _FeedbackScreenState extends State<FeedbackScreen>
         elevation: 0.0,
         centerTitle: true,
         iconTheme: Theme.of(context).iconTheme,
-        title: headingText(context, keyString(context, "lbl_feedback")),
+        title: headingText(context,keyString(context,"lbl_feedback")),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -220,12 +216,12 @@ class _FeedbackScreenState extends State<FeedbackScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              form,
+         form,
               SizedBox(
                 height: 50,
               ),
               AppButton(
-                  textContent: keyString(context, "lbl_submit"),
+                  textContent: keyString(context,"lbl_submit"),
                   onPressed: () {
                     final form = _formKey.currentState;
                     if (form.validate()) {

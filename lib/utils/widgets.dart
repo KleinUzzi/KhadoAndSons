@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:KhadoAndSons/app_localizations.dart';
-import 'package:KhadoAndSons/models/response/book_detail.dart';
-import 'package:KhadoAndSons/models/response/book_rating.dart';
-import 'package:KhadoAndSons/screens/book_description_screen.dart';
-import 'package:KhadoAndSons/screens/cart_screen.dart';
-import 'package:KhadoAndSons/screens/signIn.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/images.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
+import 'package:granth_flutter/app_localizations.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/book_rating.dart';
+import 'package:granth_flutter/screens/book_description_screen.dart';
+import 'package:granth_flutter/screens/cart_screen.dart';
+import 'package:granth_flutter/screens/signIn.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/images.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:rating_bar/rating_bar.dart';
 import 'package:intl/intl.dart';
 
-Widget text(context, var text,
+Widget text(context,var text,
     {var fontSize = ts_medium,
     textColor = textColorSecondary,
     var fontFamily = font_regular,
@@ -30,52 +30,43 @@ Widget text(context, var text,
     text,
     textAlign: isCentered
         ? TextAlign.center
-        : isJustify
-            ? TextAlign.justify
-            : TextAlign.start,
+        : isJustify ? TextAlign.justify : TextAlign.start,
     maxLines: isLongText ? 20 : maxLine,
     overflow: TextOverflow.ellipsis,
-    style: TextStyle(
+    style:TextStyle(
         fontFamily: fontFamily,
         decoration: aDecoration != null ? aDecoration : null,
         fontSize: double.parse(fontSize.toString()).toDouble(),
         height: 1.5,
-        color: textColor == textColorSecondary
-            ? Theme.of(context).textTheme.subtitle.color
-            : textColor.toString().isNotEmpty
-                ? textColor
-                : null,
+        color:  textColor==textColorSecondary?Theme.of(context).textTheme.subtitle.color:textColor.toString().isNotEmpty ? textColor : null,
         letterSpacing: latterSpacing),
   );
 }
 
-Widget toolBarTitle(BuildContext context, String title) {
-  return text(context, title,
+Widget toolBarTitle(BuildContext context,String title) {
+  return text(context,title,
       fontSize: ts_medium_large,
       textColor: Theme.of(context).textTheme.title.color,
       fontFamily: font_bold);
 }
 
-Widget headingText(BuildContext context, var aHeadingText,
-    {var afontsize = ts_extra_normal}) {
-  return text(context, aHeadingText,
-      fontSize: afontsize,
-      fontFamily: font_bold,
-      textColor: Theme.of(context).textTheme.title.color);
+Widget headingText(BuildContext context,var aHeadingText, {var afontsize = ts_extra_normal}) {
+  return text(context,aHeadingText,
+      fontSize: afontsize, fontFamily: font_bold, textColor: Theme.of(context).textTheme.title.color);
 }
 
-BoxDecoration boxDecoration(BuildContext context,
+BoxDecoration boxDecoration(BuildContext  context,
     {double radius = 2,
     Color color = Colors.transparent,
     Color bgColor = white,
     var showShadow = false}) {
   return BoxDecoration(
       //gradient: LinearGradient(colors: [bgColor, whiteColor]),
-      color: bgColor == white ? Theme.of(context).cardTheme.color : bgColor,
+      color: bgColor==white?Theme.of(context).cardTheme.color:bgColor,
       boxShadow: showShadow
           ? [
               BoxShadow(
-                  color: Theme.of(context).hoverColor.withOpacity(0.2),
+                  color:Theme.of(context).hoverColor.withOpacity(0.2),
                   blurRadius: 5,
                   spreadRadius: 3,
                   offset: Offset(1, 3))
@@ -87,23 +78,23 @@ BoxDecoration boxDecoration(BuildContext context,
 
 Widget networkImage(String image,
     {String aPlaceholder = placeholder,
-    double aWidth,
-    double aHeight,
-    var fit = BoxFit.fill}) {
+      double aWidth,
+      double aHeight,
+      var fit = BoxFit.fill}) {
   return image != null && image.isNotEmpty
       ? FadeInImage(
-          placeholder: AssetImage(placeholder),
-          image: NetworkImage(image),
-          width: aWidth != null ? aWidth : null,
-          height: aHeight != null ? aHeight : null,
-          fit: fit,
-        )
+    placeholder: AssetImage(placeholder),
+    image: NetworkImage(image),
+    width: aWidth != null ? aWidth : null,
+    height: aHeight != null ? aHeight : null,
+    fit: fit,
+  )
       : Image.asset(
-          aPlaceholder,
-          width: aWidth,
-          height: aHeight,
-          fit: BoxFit.fill,
-        );
+    aPlaceholder,
+    width: aWidth,
+    height: aHeight,
+    fit: BoxFit.fill,
+  );
 }
 
 class AppButton extends StatefulWidget {
@@ -129,7 +120,7 @@ class AppButtonState extends State<AppButton> {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: const EdgeInsets.all(0.0),
         child: Container(
-          decoration: BoxDecoration(
+          decoration:  BoxDecoration(
             color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.all(Radius.circular(spacing_standard)),
           ),
@@ -152,7 +143,6 @@ class AppButtonState extends State<AppButton> {
     return null;
   }
 }
-
 class BookGridList extends StatelessWidget {
   var list = List<BookDetail>();
   var isHorizontal = false;
@@ -166,8 +156,7 @@ class BookGridList extends StatelessWidget {
       child: GridView.builder(
         itemCount: list.length,
         shrinkWrap: true,
-        padding: EdgeInsets.fromLTRB(spacing_standard, spacing_control,
-            spacing_standard, spacing_standard),
+        padding: EdgeInsets.fromLTRB(spacing_standard,spacing_control,spacing_standard,spacing_standard),
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3, childAspectRatio: 9 / 18),
@@ -187,8 +176,8 @@ class BookGridList extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => BookDescriptionScreen(
-                                bookDetail: list[index])));
+                            builder: (context) =>
+                                BookDescriptionScreen(bookDetail: list[index])));
                   },
                   child: Card(
                     semanticContainer: true,
@@ -198,8 +187,9 @@ class BookGridList extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(spacing_control),
                     ),
-                    child: networkImage(bookDetail.frontCover,
-                        aWidth: double.infinity, aHeight: double.infinity),
+                    child: networkImage(
+                      bookDetail.frontCover,aWidth: double.infinity,aHeight: double.infinity
+                    ),
                   ),
                 ),
               ),
@@ -211,8 +201,7 @@ class BookGridList extends StatelessWidget {
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
-                  )
-                      .withStyle(
+                  ).withStyle(
                           color: Theme.of(context).textTheme.title.color,
                           fontFamily: font_bold,
                           fontSize: ts_medium)
@@ -222,40 +211,39 @@ class BookGridList extends StatelessWidget {
                     maxLines: 1,
                   )
                       .withStyle(
-                          color: Theme.of(context).textTheme.subtitle.color,
-                          fontFamily: font_regular,
-                          fontSize: ts_medium)
+                      color: Theme.of(context).textTheme.subtitle.color,
+                      fontFamily: font_regular,
+                      fontSize: ts_medium)
                       .paddingOnly(right: 8),
                   Row(
                     children: <Widget>[
-                      text(
-                        context,
+                      text(context,
                         bookDetail.discountedPrice != 0
                             ? bookDetail.discountedPrice
-                                .toString()
-                                .toCurrencyFormat()
+                            .toString()
+                            .toCurrencyFormat()
                             : bookDetail.price.toString().toCurrencyFormat(),
                         fontFamily: font_bold,
                         textColor: Theme.of(context).textTheme.title.color,
-                      ).visible(bookDetail.discountedPrice != 0 ||
-                          bookDetail.price != 0),
-                      text(
-                        context,
+                      ).visible(
+                          bookDetail.discountedPrice != 0 || bookDetail.price != 0),
+                      text(context,
                         "Free",
                         fontFamily: font_bold,
                         textColor: Theme.of(context).errorColor,
-                      ).visible(bookDetail.discountedPrice == 0 &&
-                          bookDetail.price == 0),
-                      text(
-                        context,
+                      ).visible(
+                          bookDetail.discountedPrice == 0 && bookDetail.price == 0),
+                      text(context,
                         bookDetail.price.toString().toCurrencyFormat(),
                         aDecoration: TextDecoration.lineThrough,
-                      ).paddingOnly(left: spacing_standard).visible(
-                          bookDetail.discount != 0 && bookDetail.price != 0),
+                      )
+                          .paddingOnly(left: spacing_standard)
+                          .visible(bookDetail.discount != 0 && bookDetail.price!=0),
                     ],
                   ),
                 ],
               ).paddingBottom(spacing_control),
+
             ],
           ).paddingAll(spacing_control);
         },
@@ -275,8 +263,8 @@ class BookHorizontalList extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return !isHorizontal
         ? Container(
-            height: width * (9 / 16),
-            child: ListView.builder(
+      height: width*(9/16),
+      child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: list.length,
                 shrinkWrap: true,
@@ -307,9 +295,8 @@ class BookHorizontalList extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          BookDescriptionScreen(
-                                              bookDetail: list[index])));
+                                      builder: (context) => BookDescriptionScreen(
+                                          bookDetail: list[index])));
                             },
                             radius: spacing_control,
                           ),
@@ -318,12 +305,11 @@ class BookHorizontalList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              list[index].name + "\n",
+                              list[index].name+"\n",
                               maxLines: 2,
                             )
                                 .withStyle(
-                                    color:
-                                        Theme.of(context).textTheme.title.color,
+                                    color: Theme.of(context).textTheme.title.color,
                                     fontFamily: font_medium,
                                     fontSize: ts_medium)
                                 .paddingTop(spacing_standard),
@@ -331,8 +317,7 @@ class BookHorizontalList extends StatelessWidget {
                               list[index].authorName,
                               maxLines: 1,
                             ).withStyle(
-                                color:
-                                    Theme.of(context).textTheme.subtitle.color,
+                                color: Theme.of(context).textTheme.subtitle.color,
                                 fontFamily: font_regular,
                                 fontSize: ts_medium_small)
                           ],
@@ -367,9 +352,7 @@ class BookHorizontalList extends StatelessWidget {
                             padding:
                                 EdgeInsets.only(bottom: spacing_standard_new),
                             decoration: boxDecoration(context,
-                                showShadow: true,
-                                radius: spacing_control,
-                                bgColor: Theme.of(context).cardTheme.color),
+                                showShadow: true, radius: spacing_control,bgColor: Theme.of(context).cardTheme.color),
                             width: width - 48,
                             child: Row(
                               children: <Widget>[
@@ -392,18 +375,12 @@ class BookHorizontalList extends StatelessWidget {
                                               list[index].name,
                                               maxLines: 2,
                                             ).withStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .title
-                                                    .color,
+                                                color: Theme.of(context).textTheme.title.color,
                                                 fontFamily: font_bold),
                                             Text(
                                               list[index].authorName,
                                             ).withStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .subtitle
-                                                    .color,
+                                                color: Theme.of(context).textTheme.subtitle.color,
                                                 fontFamily: font_semi_bold,
                                                 fontSize: ts_medium),
                                           ],
@@ -413,10 +390,7 @@ class BookHorizontalList extends StatelessWidget {
                                         list[index].description,
                                         maxLines: 3,
                                       ).withStyle(
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .subtitle
-                                              .color,
+                                          color: Theme.of(context).textTheme.subtitle.color,
                                           fontFamily: font_regular,
                                           fontSize: ts_medium)
                                     ],
@@ -454,12 +428,11 @@ class BookHorizontalList extends StatelessWidget {
   }
 }
 
-Widget horizontalHeading(context, var title,
-    {bool showViewAll = true, var callback}) {
+Widget horizontalHeading(context,var title, {bool showViewAll = true, var callback}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
-      headingText(context, title),
+      headingText(context,title),
       GestureDetector(
         onTap: callback,
         child: Container(
@@ -467,9 +440,8 @@ Widget horizontalHeading(context, var title,
               left: spacing_standard_new,
               top: spacing_control,
               bottom: spacing_control),
-          child: text(context, keyString(context, "lbl_view_all").toUpperCase(),
-              textColor: Theme.of(context).textTheme.button.color,
-              fontFamily: font_medium),
+          child: text(context,keyString(context,"lbl_view_all").toUpperCase(),
+              textColor: Theme.of(context).textTheme.button.color, fontFamily: font_medium),
         ).visible(showViewAll),
       )
     ],
@@ -488,9 +460,8 @@ extension StringExtension on String {
     if (this == null || this.isEmpty || this == "null") {
       return "NA";
     } else {
-      return DateFormat("HH:mm dd MMM yyyy", "en_US").format(
-          DateFormat("yyyy-MM-dd HH:mm:ss", "en_US")
-              .parse(this.replaceAll("T", " ").replaceAll(".0", "")));
+      return DateFormat("HH:mm dd MMM yyyy", "en_US")
+          .format(DateFormat("yyyy-MM-dd HH:mm:ss", "en_US").parse(this.replaceAll("T", " ").replaceAll(".0", "")));
     }
   }
 
@@ -548,10 +519,7 @@ Widget review(BuildContext context, BookRating bookRating,
       Container(
         margin: EdgeInsets.only(top: spacing_standard),
         padding: EdgeInsets.all(spacing_middle),
-        decoration: boxDecoration(context,
-            radius: spacing_control,
-            showShadow: true,
-            bgColor: Theme.of(context).cardTheme.color),
+        decoration: boxDecoration(context,radius: spacing_control, showShadow: true, bgColor: Theme.of(context).cardTheme.color),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -568,21 +536,19 @@ Widget review(BuildContext context, BookRating bookRating,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  text(context, bookRating.userName,
+                  text(context,bookRating.userName,
                       fontFamily: font_medium,
                       textColor: Theme.of(context).textTheme.title.color,
                       fontSize: ts_normal),
                   Row(
                     children: <Widget>[
                       ratingBar(rating: bookRating.rating),
-                      text(
-                        context,
+                      text(context,
                         bookRating.createdAt,
                       ).paddingOnly(left: 8),
                     ],
                   ),
-                  text(
-                    context,
+                  text(context,
                     bookRating.review != null ? bookRating.review : "NA",
                     isLongText: true,
                   ),
@@ -618,8 +584,7 @@ Widget cartIcon(context, cartCount) {
           margin: EdgeInsets.only(right: spacing_standard_new),
           padding: EdgeInsets.all(spacing_standard),
           child: Image.asset(
-            icoCart,
-            color: Theme.of(context).iconTheme.color,
+            icoCart,color: Theme.of(context).iconTheme.color,
           ),
         ),
         Align(
@@ -629,7 +594,7 @@ Widget cartIcon(context, cartCount) {
             padding: EdgeInsets.all(6),
             decoration:
                 BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-            child: text(context, cartCount.toString(), textColor: white),
+            child: text(context,cartCount.toString(), textColor: white),
           ).visible(cartCount != 0),
         )
       ],

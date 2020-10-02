@@ -49,7 +49,7 @@ PODS:
     - Flutter
   - Firebase/CoreOnly (6.26.0):
     - FirebaseCore (= 6.7.2)
-  - firebase_admob (0.10.0):
+  - firebase_admob (0.10.0-1):
     - Firebase/CoreOnly (~> 6.26.0)
     - firebase_core
     - Flutter
@@ -338,7 +338,7 @@ SPEC CHECKSUMS:
   connectivity_macos: e2e9731b6b22dda39eb1b128f6969d574460e191
   device_id: 4a0bf078741a3eec6ba0e6cc72e786395d5991b0
   Firebase: 7cf5f9c67f03cb3b606d1d6535286e1080e57eb6
-  firebase_admob: ffb2b5b93fd1fd6cea6c9ee5c46bd45f332ea704
+  firebase_admob: 233f4bcc3b2855eefdad08bf9182a54d5e4ff4f1
   firebase_core: 3134fe79d257d430f163b558caf52a10a87efe8a
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
   FirebaseCore: f42e5e5f382cdcf6b617ed737bf6c871a6947b17

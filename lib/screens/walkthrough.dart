@@ -2,13 +2,13 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:KhadoAndSons/screens/home_screen.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/images.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/screens/home_screen.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/images.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -57,7 +57,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Stack(
-      alignment: Alignment.topRight,
+          alignment: Alignment.topRight,
       children: <Widget>[
         Container(
           width: MediaQuery.of(context).size.width,
@@ -68,28 +68,10 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
               PageView(
                 controller: _controller,
                 children: <Widget>[
-                  WalkThrough(
-                      title: 'Select a Book',
-                      subTitle:
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ",
-                      walkImg: icon_walk1),
-                  WalkThrough(
-                      title: 'Purchase Online',
-                      subTitle:
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ",
-                      walkImg: icon_walk2),
-                  WalkThrough(
-                      title: 'Enjoy Your Book',
-                      subTitle:
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ",
-                      walkImg: icon_walk3),
-                  WalkThrough(
-                    title: 'Welcome to Granth',
-                    subTitle:
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ",
-                    walkImg: icon_walk4,
-                    isLast: true,
-                  ),
+                  WalkThrough(title: 'Select a Book',subTitle:"Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ", walkImg: icon_walk1),
+                  WalkThrough(title: 'Purchase Online',subTitle:"Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ", walkImg: icon_walk2),
+                  WalkThrough(title: 'Enjoy Your Book',subTitle:"Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ", walkImg: icon_walk3),
+                  WalkThrough(title: 'Welcome to Granth',subTitle:"Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ", walkImg: icon_walk4, isLast: true,),
                 ],
                 onPageChanged: (value) {
                   setState(() => currentIndexPage = value);
@@ -121,8 +103,7 @@ class WalkThrough extends StatelessWidget {
   final bool isLast;
   final String walkImg;
 
-  WalkThrough(
-      {Key key, this.title, this.subTitle, this.isLast = false, this.walkImg})
+  WalkThrough({Key key, this.title,this.subTitle, this.isLast = false, this.walkImg})
       : super(key: key);
 
   @override
@@ -151,14 +132,16 @@ class WalkThrough extends StatelessWidget {
               SizedBox(
                 height: width * 0.1,
               ),
-              text(context, title,
+              text(context,title,
                   textColor: Theme.of(context).textTheme.title.color,
                   fontSize: ts_extra_normal,
                   fontFamily: font_bold),
               Padding(
                 padding: const EdgeInsets.only(left: 28.0, right: 28.0),
-                child: text(context, subTitle,
-                    fontSize: ts_normal, maxLine: 3, isCentered: true),
+                child: text(context,subTitle,
+                    fontSize: ts_normal,
+                    maxLine: 3,
+                    isCentered: true),
               )
             ],
           ),
@@ -174,13 +157,13 @@ class WalkThrough extends StatelessWidget {
                     margin: EdgeInsets.only(left: 16, right: 16, bottom: 50),
                     alignment: Alignment.center,
                     height: width / 8,
-                    child: text(context, keyString(context, "lbl_get_started"),
+                    child: text(context,keyString(context,"lbl_get_started"),
                         textColor: white,
                         isCentered: true,
                         fontSize: ts_normal,
                         fontFamily: font_medium),
-                    decoration: boxDecoration(context,
-                        bgColor: Theme.of(context).primaryColor, radius: 30),
+                    decoration:
+                        boxDecoration(context,bgColor:Theme.of(context).primaryColor, radius: 30),
                   ),
                 ),
               )
@@ -189,3 +172,4 @@ class WalkThrough extends StatelessWidget {
     );
   }
 }
+

@@ -1,5 +1,5 @@
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:KhadoAndSons/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
 
 class DownloadedBook {
   int id;
@@ -46,8 +46,8 @@ DownloadTask defaultTask(url) {
   return DownloadTask(status: DownloadTaskStatus.undefined, url: url);
 }
 
-DownloadedBook defaultBook(BookDetail mBookDetail, fileType) {
-  return DownloadedBook(
+DownloadedBook defaultBook(BookDetail mBookDetail,fileType) {
+  return  DownloadedBook(
       bookId: mBookDetail.bookId.toString(),
       bookName: mBookDetail.name,
       frontCover: mBookDetail.frontCover,

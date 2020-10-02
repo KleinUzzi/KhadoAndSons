@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/utils/common.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
-import 'package:KhadoAndSons/utils/resources/colors.dart';
-import 'package:KhadoAndSons/utils/resources/images.dart';
-import 'package:KhadoAndSons/utils/resources/size.dart';
-import 'package:KhadoAndSons/utils/widgets.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/utils/common.dart';
+import 'package:granth_flutter/utils/constants.dart';
+import 'package:granth_flutter/utils/resources/colors.dart';
+import 'package:granth_flutter/utils/resources/images.dart';
+import 'package:granth_flutter/utils/resources/size.dart';
+import 'package:granth_flutter/utils/widgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
@@ -76,16 +76,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         color: Colors.red,
       ), //cameraIcon and galleryIcon can change. If no icon provided default icon will be present
     );
-    if (image != null) {
+    if(image!=null){
       setState(() {
         imageFile = image;
         loadFromFile = true;
       });
     }
+
   }
 
   saveProfile(context) async {
-    if (isLoading) {
+    if(isLoading){
       return;
     }
     isNetworkAvailable().then((bool) {
@@ -102,12 +103,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         updateUser(request, imageFile).then((result) {
           print(result);
           showLoading(false);
+
         }).catchError((error) {
           toast(error.toString());
           showLoading(false);
+
         });
       } else {
-        toast(keyString(context, "error_network_no_internet"));
+        toast(keyString(context,"error_network_no_internet"));
       }
     });
   }
@@ -145,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ).onTap(() {
               getImage(ImgSource.Both);
             }),
-            text(context, keyString(context, "lbl_change_photo"),
+            text(context,keyString(context,"lbl_change_photo"),
                     textColor: Theme.of(context).textTheme.button.color,
                     fontFamily: font_bold,
                     fontSize: ts_medium)
@@ -164,9 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             controller: _nameController,
             cursorColor: Theme.of(context).textTheme.title.color,
             validator: (value) {
-              return value.isEmpty
-                  ? keyString(context, "error_name_required")
-                  : null;
+              return value.isEmpty ? keyString(context,"error_name_required") : null;
             },
             onSaved: (String value) {
               name = value;
@@ -176,10 +177,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
               ),
               enabledBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: Theme.of(context).textTheme.title.color),
+                borderSide: BorderSide(color: Theme.of(context).textTheme.title.color),
               ),
-              labelText: keyString(context, "hint_name"),
+              labelText: keyString(context,"hint_name"),
               labelStyle: TextStyle(
                   fontSize: ts_normal,
                   fontFamily: font_medium,
@@ -199,9 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             cursorColor: Theme.of(context).textTheme.title.color,
             maxLines: 1,
             validator: (value) {
-              return value.isEmpty
-                  ? keyString(context, "error_uname_required")
-                  : null;
+              return value.isEmpty ? keyString(context,"error_uname_required") : null;
             },
             onSaved: (String value) {
               userName = value;
@@ -211,10 +209,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
               ),
               enabledBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: Theme.of(context).textTheme.title.color),
+                borderSide: BorderSide(color: Theme.of(context).textTheme.title.color),
               ),
-              labelText: keyString(context, "hint_username"),
+              labelText: keyString(context,"hint_username"),
               labelStyle: TextStyle(
                   fontSize: ts_normal,
                   fontFamily: font_medium,
@@ -234,8 +231,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             cursorColor: Theme.of(context).textTheme.title.color,
             maxLines: 1,
             keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              return validateEMail(context, value);
+            validator: (value){
+              return validateEMail(context,value);
             },
             onSaved: (String value) {
               userEmail = value;
@@ -245,10 +242,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
               ),
               enabledBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: Theme.of(context).textTheme.title.color),
+                borderSide: BorderSide(color: Theme.of(context).textTheme.title.color),
               ),
-              labelText: keyString(context, "hint_email"),
+              labelText: keyString(context,"hint_email"),
               labelStyle: TextStyle(
                   fontSize: ts_normal,
                   fontFamily: font_medium,
@@ -270,7 +266,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             maxLength: 12,
             keyboardType: TextInputType.phone,
             validator: (value) {
-              return value.isEmpty ? keyString(context, "error_mobile") : null;
+              return value.isEmpty ? keyString(context,"error_mobile") : null;
             },
             onSaved: (String value) {
               contact = value;
@@ -280,10 +276,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
               ),
               enabledBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: Theme.of(context).textTheme.title.color),
+                borderSide: BorderSide(color: Theme.of(context).textTheme.title.color),
               ),
-              labelText: keyString(context, "hint_contact_no"),
+              labelText: keyString(context,"hint_contact_no"),
               labelStyle: TextStyle(
                   fontSize: ts_normal,
                   fontFamily: font_medium,
@@ -305,9 +300,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         iconTheme: Theme.of(context).iconTheme,
         centerTitle: true,
-        title: headingText(
-          context,
-          keyString(context, "guide_lbl_profile_edit"),
+        title: headingText(context,
+          keyString(context,"guide_lbl_profile_edit"),
         ),
       ),
       body: Stack(
@@ -319,7 +313,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 profilePhoto,
                 fields,
                 AppButton(
-                  textContent: keyString(context, "lbl_save"),
+                  textContent: keyString(context,"lbl_save"),
                   onPressed: () {
                     if (isLoading) {
                       return;

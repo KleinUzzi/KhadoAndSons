@@ -1,10 +1,10 @@
-import 'package:KhadoAndSons/models/response/author.dart';
-import 'package:KhadoAndSons/models/response/base_response.dart';
-import 'package:KhadoAndSons/models/response/book_detail.dart';
-import 'package:KhadoAndSons/models/response/category.dart';
-import 'package:KhadoAndSons/models/response/configuration.dart';
-import 'package:KhadoAndSons/models/response/pagination.dart';
-import 'package:KhadoAndSons/models/response/slider.dart';
+import 'package:granth_flutter/models/response/author.dart';
+import 'package:granth_flutter/models/response/base_response.dart';
+import 'package:granth_flutter/models/response/book_detail.dart';
+import 'package:granth_flutter/models/response/category.dart';
+import 'package:granth_flutter/models/response/configuration.dart';
+import 'package:granth_flutter/models/response/pagination.dart';
+import 'package:granth_flutter/models/response/slider.dart';
 
 class DashboardResponse extends BaseResponse {
   List<Category> categoryBook;
@@ -32,9 +32,7 @@ class DashboardResponse extends BaseResponse {
       this.topSearchBook,
       this.topSellBook,
       this.data,
-      this.pagination,
-      this.isPayPalEnabled,
-      this.isPayTmEnabled});
+      this.pagination,this.isPayPalEnabled,this.isPayTmEnabled});
 
   factory DashboardResponse.fromJson(Map<String, dynamic> json) {
     return DashboardResponse(
@@ -85,6 +83,7 @@ class DashboardResponse extends BaseResponse {
           : null,
       isPayPalEnabled: json['is_paypal_configuration'],
       isPayTmEnabled: json['is_paytm_configuration'],
+
     );
   }
 

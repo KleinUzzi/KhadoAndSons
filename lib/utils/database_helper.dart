@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:KhadoAndSons/models/response/downloaded_book.dart';
+import 'package:granth_flutter/models/response/downloaded_book.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -47,8 +47,7 @@ class DatabaseHelper {
   _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
-    return await openDatabase(path,
-        version: _databaseVersion, onCreate: _onCreate);
+    return await openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -62,40 +61,29 @@ class DatabaseHelper {
 
   Future<List<DownloadedBook>> queryAllRows() async {
     Database db = await instance.database;
-    var list = await db.query(TABLE_NAME);
+   var list= await db.query(TABLE_NAME);
     return list.map((i) => DownloadedBook.fromJson(i)).toList();
   }
 
   Future<int> queryRowCount() async {
     Database db = await instance.database;
-    return Sqflite.firstIntValue(
-        await db.rawQuery('SELECT COUNT(*) FROM $TABLE_NAME'));
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $TABLE_NAME'));
   }
 
-  Future<List<DownloadedBook>> queryRowBook(bookId) async {
+  Future<List<DownloadedBook>> queryRowBook(bookId) async{
     Database db = await instance.database;
-    var list = await db.rawQuery(
-        "SELECT * FROM " +
-            TABLE_NAME +
-            " WHERE " +
-            COLUMN_NAME_BOOK_ID +
-            "='" +
-            bookId +
-            "'",
-        null);
+    var list =await  db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_BOOK_ID + "='" + bookId + "'" , null);
     return list.map((i) => DownloadedBook.fromJson(i)).toList();
   }
 
   Future<int> update(DownloadedBook book) async {
     Database db = await instance.database;
     int id = book.id;
-    return await db.update(TABLE_NAME, book.toJson(),
-        where: '$COLUMN_NAME_ID = ?', whereArgs: [id]);
+    return await db.update(TABLE_NAME, book.toJson(), where: '$COLUMN_NAME_ID = ?', whereArgs: [id]);
   }
 
   Future<int> delete(int id) async {
     Database db = await instance.database;
-    return await db
-        .delete(TABLE_NAME, where: '$COLUMN_NAME_ID = ?', whereArgs: [id]);
+    return await db.delete(TABLE_NAME, where: '$COLUMN_NAME_ID = ?', whereArgs: [id]);
   }
 }

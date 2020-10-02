@@ -1,8 +1,8 @@
-import 'package:KhadoAndSons/models/response/base_response.dart';
+import 'package:granth_flutter/models/response/base_response.dart';
 
 import 'login_response.dart';
 
-class RegisterResponse {
+class RegisterResponse  {
   LoginData data;
   String message;
   bool status;

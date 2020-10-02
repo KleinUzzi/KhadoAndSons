@@ -3,10 +3,10 @@ import 'dart:convert';
 
 import 'package:braintree_payment/braintree_payment.dart';
 import 'package:flutter/services.dart';
-import 'package:KhadoAndSons/models/response/braintree_payment_responses.dart';
-import 'package:KhadoAndSons/models/response/checksum_response.dart';
-import 'package:KhadoAndSons/network/rest_apis.dart';
-import 'package:KhadoAndSons/utils/constants.dart';
+import 'package:granth_flutter/models/response/braintree_payment_responses.dart';
+import 'package:granth_flutter/models/response/checksum_response.dart';
+import 'package:granth_flutter/network/rest_apis.dart';
+import 'package:granth_flutter/utils/constants.dart';
 
 import '../../app_localizations.dart';
 import '../common.dart';
@@ -22,12 +22,12 @@ class CartPayment {
       const MethodChannel(PAYPAL_CHANNEL);
 
   static Future payWithPayTm(context, totalAmount, orderDetail, paymentType) {
-    makePayment(context, totalAmount).then((result) {
-      CheckSumResponse checksum = CheckSumResponse.fromJson(result);
-      return proceesPaytmPayment(context, checksum, orderDetail);
-    }).catchError((error) {
-      throw error;
-    });
+     makePayment(context, totalAmount).then((result){
+       CheckSumResponse checksum = CheckSumResponse.fromJson(result);
+       return proceesPaytmPayment(context,checksum, orderDetail);
+     }).catchError((error){
+       throw error;
+     });
   }
 
   static Future makePayment(context, total) {
@@ -51,7 +51,7 @@ class CartPayment {
     });*/
   }
 
-  static Future paywithPayPal(context, token, total, orderDetail) async {
+  static Future paywithPayPal(context,token, total,orderDetail) async {
     BraintreePayment braintreePayment = new BraintreePayment();
     var data = await braintreePayment.showDropIn(
         nonce: token,
@@ -66,52 +66,44 @@ class CartPayment {
         "payment_method_nonce": data["paymentNonce"],
         "amount": total
       };
-      savePayPalTransaction(request).then((res) async {
-        CreateTransactionResponse response =
-            CreateTransactionResponse.fromJson(res);
-        if (response.data.transaction != null) {
-          Transaction transaction = response.data.transaction;
-          makePayment(context, total).then((result) async {
-            CheckSumResponse checksum = CheckSumResponse.fromJson(result);
-            var transactionDetail = <String, String>{
-              "BANKNAME": "NA",
-              "ORDERID": checksum.data.order_data.oRDER_ID,
-              "CHECKSUMHASH": checksum.data.checksum_data.cHECKSUMHASH,
-              "TXNAMOUNT": checksum.data.order_data.tXN_AMOUNT.toString(),
-              "TXNDATE": getCurrentDate(),
-              "MID": "NA",
-              "TXNID": transaction.id,
-              "PAYMENTMODE": PAYPAL,
-              "CURRENCY": CURRENCY_CODE,
-              "BANKTXNID": "NA",
-              "GATEWAYNAME": "NA",
-              "RESPMSG": transaction.processorResponseType,
-              "STATUS": transaction.status == "settling" ||
-                      transaction.status == "submitted_for_settlement"
-                  ? "TXN_SUCCESS"
-                  : "TXN_FAILURE",
-            };
+       savePayPalTransaction(request).then((res) async{
+         CreateTransactionResponse response=CreateTransactionResponse.fromJson(res);
+         if (response.data.transaction != null) {
+           Transaction transaction=response.data.transaction;
+           makePayment(context, total).then((result)async{
+             CheckSumResponse checksum = CheckSumResponse.fromJson(result);
+             var transactionDetail = <String, String>{
+               "BANKNAME": "NA",
+               "ORDERID": checksum.data.order_data.oRDER_ID,
+               "CHECKSUMHASH": checksum.data.checksum_data.cHECKSUMHASH,
+               "TXNAMOUNT": checksum.data.order_data.tXN_AMOUNT.toString(),
+               "TXNDATE": getCurrentDate(),
+               "MID": "NA",
+               "TXNID": transaction.id,
+               "PAYMENTMODE": PAYPAL,
+               "CURRENCY": CURRENCY_CODE,
+               "BANKTXNID": "NA",
+               "GATEWAYNAME": "NA",
+               "RESPMSG": transaction.processorResponseType,
+               "STATUS": transaction.status=="settling" || transaction.status=="submitted_for_settlement"? "TXN_SUCCESS" : "TXN_FAILURE",
+             };
 
-            showTransactionDialog(
-                context,
-                transaction.status == "settling" ||
-                    transaction.status == "submitted_for_settlement");
+             showTransactionDialog(context, transaction.status=="settling" || transaction.status=="submitted_for_settlement");
 
-            return saveTransaction(transactionDetail, orderDetail, PAYPAL, 1);
-          }).catchError((error) {
-            throw error;
-          });
-        } else {
-          throw "Unable to create a transaction." + response.message;
-        }
-      }).catchError((error) {
-        throw error;
-      });
+             return saveTransaction(transactionDetail, orderDetail, PAYPAL, 1);
+           }).catchError((error){
+             throw error;
+           });
+         } else {
+           throw "Unable to create a transaction." + response.message;
+         }
+       }).catchError((error){
+         throw error;
+       });
     }
   }
 
-  static Future proceesPaytmPayment(
-      context, CheckSumResponse response, orderDetail) async {
+  static Future proceesPaytmPayment(context,CheckSumResponse response, orderDetail) async {
     await startPayTmPayment(response).then((Map<dynamic, dynamic> inResponse) {
       print(jsonEncode(inResponse));
       if (inResponse.containsKey("error")) {
@@ -139,8 +131,7 @@ class CartPayment {
           "RESPMSG": inResponse["RESPMSG"].toString(),
           "STATUS": inResponse["STATUS"].toString(),
         };
-        showTransactionDialog(
-            context, inResponse["STATUS"].toString() == "TXN_SUCCESS");
+        showTransactionDialog(context, inResponse["STATUS"].toString()=="TXN_SUCCESS");
 
         return saveTransaction(request, orderDetail, PAYTM, status);
       }
