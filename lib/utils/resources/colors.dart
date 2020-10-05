@@ -3,7 +3,7 @@ import 'dart:ui';
 const colorPrimary = Color(0xFF65328f);
 const colorPrimaryDark = Color(0xFF371d4c);
 const colorPrimary_trans = Color(0xFF65328f);
-const colorAccent = Color(0xFFee4444);
+const colorAccent = Color(0xFFea5b29);
 const colorAccent_alpha = Color(0xFF94ffc107);
 const colorAccentTrans = Color(0xFFae074daf);
 const color_red = Color(0xFFBE1C1C);
