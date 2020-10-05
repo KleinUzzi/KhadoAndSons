@@ -158,7 +158,6 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
             print(error.toString());
             showLoading(false);
           });
-
         } else {
           toast(error_network_no_internet);
           finish(context);
@@ -174,7 +173,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
       var sampleTask;
       var purchaseTask;
       List<DownloadedBook> list =
-      await dbHelper.queryRowBook(mBookDetail.bookId.toString());
+          await dbHelper.queryRowBook(mBookDetail.bookId.toString());
       List<DownloadTask> tasks = await FlutterDownloader.loadTasks();
       if (list != null && list.isNotEmpty) {
         list.forEach((book) {
@@ -239,10 +238,10 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
                     child: Column(
                       children: <Widget>[
                         text(context, keyString(context, "lbl_rateBook"),
-                            fontSize: 24,
-                            fontFamily: font_bold,
-                            textColor:
-                            Theme.of(context).textTheme.title.color)
+                                fontSize: 24,
+                                fontFamily: font_bold,
+                                textColor:
+                                    Theme.of(context).textTheme.title.color)
                             .paddingAll(spacing_middle),
                         Divider(
                           thickness: 0.5,
@@ -279,18 +278,23 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
                             decoration: new InputDecoration(
                               hintText: keyString(context, "aRate_hint"),
                               border: InputBorder.none,
-
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).primaryColor),
                               ),
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Theme.of(context).textTheme.title.color),
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .title
+                                        .color),
                               ),
                               labelStyle: TextStyle(
                                   fontSize: ts_normal,
-                                  color: Theme.of(context).textTheme.title.color),
-                              labelText: keyString(context,"hint_confirm_your_new_password"),
+                                  color:
+                                      Theme.of(context).textTheme.title.color),
+                              labelText: keyString(
+                                  context, "hint_confirm_your_new_password"),
                               filled: false,
                             ),
                           ).paddingOnly(
@@ -302,7 +306,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
                             Expanded(
                               child: MaterialButton(
                                 textColor:
-                                Theme.of(context).textTheme.title.color,
+                                    Theme.of(context).textTheme.title.color,
                                 child: text(context,
                                     keyString(context, "aRate_lbl_Cancel"),
                                     fontSize: ts_normal,
@@ -332,7 +336,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
                                     context, keyString(context, "lbl_post"),
                                     fontSize: ts_normal,
                                     textColor:
-                                    Theme.of(context).cardTheme.color),
+                                        Theme.of(context).cardTheme.color),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(5.0),
                                 ),
@@ -385,7 +389,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
     print(
         'Background Isolate Callback: task ($id) is in status ($status) and process ($progress)');
     final SendPort send =
-    IsolateNameServer.lookupPortByName('downloader_send_port');
+        IsolateNameServer.lookupPortByName('downloader_send_port');
     send.send([id, status, progress]);
   }
 
@@ -475,7 +479,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
 
   addRemoveToWishList(isWishList) async {
     bool result =
-    await addRemoveWishList(context, mBookDetail.bookId, isWishList);
+        await addRemoveWishList(context, mBookDetail.bookId, isWishList);
     if (result) {
       fetchBookDetail();
     }
@@ -524,10 +528,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
       });
       await dbHelper.insert(mSampleDownloadTask);
     } else if (mSampleDownloadTask.status == DownloadTaskStatus.complete) {
-      readFile(
-          context,
-
-              mSampleDownloadTask.mDownloadTask.filename,
+      readFile(context, mSampleDownloadTask.mDownloadTask.filename,
           mBookDetail.name);
     } else {
       toast('Downloading');
@@ -550,10 +551,7 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
       await dbHelper.insert(mBookDownloadTask);
     } else if (mBookDownloadTask.status == DownloadTaskStatus.complete) {
       readFile(
-          context,
-
-              mBookDownloadTask.mDownloadTask.filename,
-          mBookDetail.name);
+          context, mBookDownloadTask.mDownloadTask.filename, mBookDetail.name);
     } else {
       toast('Downloading');
     }
@@ -599,312 +597,312 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
 
     final yourReview = userReviewData != null
         ? Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          headingText(
-            context,
-            keyString(context, "lbl_your_review"),
-          ),
-          InkWell(
-              onTap: () {
-                controller.text = userReviewData.review;
-                rating = double.parse(userReviewData.rating.toString());
-                showRatingDialog(context);
-              },
-              child: review(context, userReviewData, isUserReview: true,
-                  callback: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        // return object of type Dialog
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                headingText(
+                  context,
+                  keyString(context, "lbl_your_review"),
+                ),
+                InkWell(
+                    onTap: () {
+                      controller.text = userReviewData.review;
+                      rating = double.parse(userReviewData.rating.toString());
+                      showRatingDialog(context);
+                    },
+                    child: review(context, userReviewData, isUserReview: true,
+                        callback: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          // return object of type Dialog
 
-                        return Theme(
-                          data: ThemeData(
-                              canvasColor: Theme.of(context).scaffoldBackgroundColor
-                          ),
-                          child: AlertDialog(
-                            title: new Text(
-                                keyString(context, "lbl_confirmation")),
-                            content:
-                            new Text(keyString(context, "lbl_note_delete")),
-                            actions: <Widget>[
-                              // usually buttons at the bottom of the dialog
-                              new FlatButton(
-                                child: new Text(keyString(context, "close")),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              new FlatButton(
-                                child: new Text(keyString(context, "lbl_ok")),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  deleteBookRating(userReviewData.ratingId);
-                                },
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  }).paddingTop(spacing_standard_new)),
-        ],
-      ).paddingOnly(
-          left: spacing_standard_new,
-          right: spacing_standard_new,
-          top: spacing_standard_new,
-          bottom: spacing_standard_new),
-    )
+                          return Theme(
+                            data: ThemeData(
+                                canvasColor:
+                                    Theme.of(context).scaffoldBackgroundColor),
+                            child: AlertDialog(
+                              title: new Text(
+                                  keyString(context, "lbl_confirmation")),
+                              content: new Text(
+                                  keyString(context, "lbl_note_delete")),
+                              actions: <Widget>[
+                                // usually buttons at the bottom of the dialog
+                                new FlatButton(
+                                  child: new Text(keyString(context, "close")),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                new FlatButton(
+                                  child: new Text(keyString(context, "lbl_ok")),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    deleteBookRating(userReviewData.ratingId);
+                                  },
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }).paddingTop(spacing_standard_new)),
+              ],
+            ).paddingOnly(
+                left: spacing_standard_new,
+                right: spacing_standard_new,
+                top: spacing_standard_new,
+                bottom: spacing_standard_new),
+          )
         : Container();
 
     final topReviews = description != null
         ? Container(
-      alignment: Alignment.centerLeft,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          horizontalHeading(
-              context, keyString(context, "lbl_top_reviews"),
-              showViewAll: bookRating.length > 3,
-              callback: bookRating.length > 3
-                  ? () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            BookReviews(bookDetail: mBookDetail)));
-              }
-                  : null),
-          bookRating.length > 0
-              ? ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount:
-            bookRating.length <= 3 ? bookRating.length : 3,
-            shrinkWrap: true,
-            padding: EdgeInsets.only(
-                left: spacing_standard_new,
-                right: spacing_standard_new,
-                top: spacing_standard_new,
-                bottom: spacing_standard),
-            itemBuilder: (context, index) {
-              return review(context, bookRating[index]);
-            },
-          )
-              : text(context, keyString(context, "no_review"),
-              fontSize: ts_normal,
-              fontFamily: font_medium,
-              textColor: Colors.grey.withOpacity(0.7))
-              .paddingOnly(
-              top: spacing_standard_new,
-              left: spacing_standard_new),
-          MaterialButton(
-            minWidth: MediaQuery.of(context).size.width,
-            elevation: spacing_control,
-            padding: EdgeInsets.fromLTRB(
-                24, spacing_middle, 24, spacing_middle),
-            color: Theme.of(context).cardTheme.color,
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(spacing_control),
-              side: BorderSide(color: Theme.of(context).cardTheme.color),
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                horizontalHeading(
+                    context, keyString(context, "lbl_top_reviews"),
+                    showViewAll: bookRating.length > 3,
+                    callback: bookRating.length > 3
+                        ? () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        BookReviews(bookDetail: mBookDetail)));
+                          }
+                        : null),
+                bookRating.length > 0
+                    ? ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount:
+                            bookRating.length <= 3 ? bookRating.length : 3,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.only(
+                            left: spacing_standard_new,
+                            right: spacing_standard_new,
+                            top: spacing_standard_new,
+                            bottom: spacing_standard),
+                        itemBuilder: (context, index) {
+                          return review(context, bookRating[index]);
+                        },
+                      )
+                    : text(context, keyString(context, "no_review"),
+                            fontSize: ts_normal,
+                            fontFamily: font_medium,
+                            textColor: Colors.grey.withOpacity(0.7))
+                        .paddingOnly(
+                            top: spacing_standard_new,
+                            left: spacing_standard_new),
+                MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width,
+                  elevation: spacing_control,
+                  padding: EdgeInsets.fromLTRB(
+                      24, spacing_middle, 24, spacing_middle),
+                  color: Theme.of(context).cardTheme.color,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(spacing_control),
+                    side: BorderSide(color: Theme.of(context).cardTheme.color),
+                  ),
+                  child: text(context, keyString(context, "lbl_write_review"),
+                      textColor: Theme.of(context).textTheme.title.color,
+                      fontFamily: font_medium,
+                      fontSize: ts_normal),
+                  onPressed: () async {
+                    if (isUserLoggedIn) {
+                      showRatingDialog(context);
+                    } else {
+                      launchScreen(context, SignIn.tag);
+                    }
+                  },
+                )
+                    .paddingOnly(
+                        left: spacing_standard_new,
+                        right: spacing_standard_new,
+                        top: spacing_standard_new)
+                    .visible(userReviewData == null)
+              ],
             ),
-            child: text(context, keyString(context, "lbl_write_review"),
-                textColor: Theme.of(context).textTheme.title.color,
-                fontFamily: font_medium,
-                fontSize: ts_normal),
-            onPressed: () async {
-              if (isUserLoggedIn) {
-                showRatingDialog(context);
-              } else {
-                launchScreen(context, SignIn.tag);
-              }
-            },
           )
-              .paddingOnly(
-              left: spacing_standard_new,
-              right: spacing_standard_new,
-              top: spacing_standard_new)
-              .visible(userReviewData == null)
-        ],
-      ),
-    )
         : Container();
     var bookDescriptionWidget = mBookDetail != null
         ? Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color: Theme.of(context).cardTheme.color,
-          boxShadow: [
-            BoxShadow(
-                color: Theme.of(context).hoverColor.withOpacity(0.15),
-                blurRadius: 5,
-                spreadRadius: 4,
-                offset: Offset.fromDirection(3, 1))
-          ]),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          text(context, mBookDetail.description,
-              maxLine: 3, isLongText: isExpanded),
-          InkWell(
-              onTap: () {
-                setState(() {
-                  isExpanded = !isExpanded;
-                });
-              },
-              child: text(
-                  context,
-                  isExpanded
-                      ? keyString(context, "lbl_read_less")
-                      : keyString(context, "lbl_read_more"),
-                  textColor: Theme.of(context).textTheme.title.color,
-                  fontFamily: font_semi_bold))
-        ],
-      ).paddingOnly(
-          left: spacing_standard_new, bottom: spacing_standard_new),
-    )
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: Theme.of(context).cardTheme.color,
+                boxShadow: [
+                  BoxShadow(
+                      color: Theme.of(context).hoverColor.withOpacity(0.15),
+                      blurRadius: 5,
+                      spreadRadius: 4,
+                      offset: Offset.fromDirection(3, 1))
+                ]),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                text(context, mBookDetail.description,
+                    maxLine: 3, isLongText: isExpanded),
+                InkWell(
+                    onTap: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                      });
+                    },
+                    child: text(
+                        context,
+                        isExpanded
+                            ? keyString(context, "lbl_read_less")
+                            : keyString(context, "lbl_read_more"),
+                        textColor: Theme.of(context).textTheme.title.color,
+                        fontFamily: font_semi_bold))
+              ],
+            ).paddingOnly(
+                left: spacing_standard_new, bottom: spacing_standard_new),
+          )
         : Container();
 
     var priceInfo = mBookDetail != null
         ? Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        text(
-            context,
-            mBookDetail.discountedPrice != 0
-                ? mBookDetail.discountedPrice
-                .toString()
-                .toCurrencyFormat()
-                : mBookDetail.price.toString().toCurrencyFormat(),
-            textColor: Theme.of(context).textTheme.title.color,
-            fontSize: ts_large,
-            fontFamily: font_bold)
-            .visible(mBookDetail.discountedPrice != 0 ||
-            mBookDetail.price != 0),
-        text(
-          context,
-          mBookDetail.price.toString().toCurrencyFormat(),
-          fontSize: ts_normal,
-          aDecoration: TextDecoration.lineThrough,
-        )
-            .paddingOnly(left: spacing_standard)
-            .visible(mBookDetail.discount != 0),
-      ],
-    ).paddingOnly(
-      top: spacing_standard_new,
-    )
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              text(
+                      context,
+                      mBookDetail.discountedPrice != 0
+                          ? mBookDetail.discountedPrice
+                              .toString()
+                              .toCurrencyFormat()
+                          : mBookDetail.price.toString().toCurrencyFormat(),
+                      textColor: Theme.of(context).textTheme.title.color,
+                      fontSize: ts_large,
+                      fontFamily: font_bold)
+                  .visible(mBookDetail.discountedPrice != 0 ||
+                      mBookDetail.price != 0),
+              text(
+                context,
+                mBookDetail.price.toString().toCurrencyFormat(),
+                fontSize: ts_normal,
+                aDecoration: TextDecoration.lineThrough,
+              )
+                  .paddingOnly(left: spacing_standard)
+                  .visible(mBookDetail.discount != 0),
+            ],
+          ).paddingOnly(
+            top: spacing_standard_new,
+          )
         : Container();
     var discountInfo = mBookDetail != null
         ? text(
-      context,
-      "~ " +
-          mBookDetail.discount.toString() +
-          keyString(context, "lbl_your_discount"),
-      fontFamily: font_medium,
-      fontSize: ts_normal,
-      textColor: Theme.of(context).errorColor,
-    )
-        .paddingOnly(left: spacing_standard)
-        .visible(mBookDetail.discount != 0)
+            context,
+            "~ " +
+                mBookDetail.discount.toString() +
+                keyString(context, "lbl_your_discount"),
+            fontFamily: font_medium,
+            fontSize: ts_normal,
+            textColor: Theme.of(context).errorColor,
+          )
+            .paddingOnly(left: spacing_standard)
+            .visible(mBookDetail.discount != 0)
         : Container();
     var buttons = mBookDetail != null
         ? Row(
-      children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(spacing_standard_new),
-            child: RaisedButton(
-              padding: EdgeInsets.fromLTRB(
-                  24, spacing_middle, 24, spacing_middle),
-              elevation: spacing_control,
-              color: Theme.of(context).cardTheme.color,
-              shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(spacing_control),
-                side:
-                BorderSide(color: Theme.of(context).cardTheme.color),
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(spacing_standard_new),
+                  child: RaisedButton(
+                    padding: EdgeInsets.fromLTRB(
+                        24, spacing_middle, 24, spacing_middle),
+                    elevation: spacing_control,
+                    color: Theme.of(context).cardTheme.color,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(spacing_control),
+                      side:
+                          BorderSide(color: Theme.of(context).cardTheme.color),
+                    ),
+                    child: buildActionForTask(),
+                    onPressed: () {
+                      checkPermission(context).then((hasGranted) {
+                        sampleClick(context);
+                      });
+                    },
+                  ),
+                ),
               ),
-              child: buildActionForTask(),
-              onPressed: () {
-                checkPermission(context).then((hasGranted) {
-                  sampleClick(context);
-                });
-              },
-            ),
-          ),
-        ),
-        mBookDetail.is_purchase == 0 && mBookDetail.price != 0
-            ? Padding(
-          padding: const EdgeInsets.all(spacing_standard_new),
-          child: MaterialButton(
-            padding: EdgeInsets.fromLTRB(spacing_large,
-                spacing_middle, spacing_large, spacing_middle),
-            shape: RoundedRectangleBorder(
-              borderRadius:
-              new BorderRadius.circular(spacing_control),
-              side: BorderSide(
-                  color: Theme.of(context).colorScheme.secondary),
-            ),
-            elevation: spacing_control,
-            color: Theme.of(context).colorScheme.secondary,
-            child: text(context, 'Add to Cart',
-                textColor: white,
-                fontSize: ts_normal,
-                fontFamily: font_medium),
-            onPressed: () {
-              if (isUserLoggedIn) {
-                if (isExistInCart) {
-                  toast("Already exisat in cart");
-                } else {
-                  addBookToCart();
-                }
-              } else {
-                launchScreen(context, SignIn.tag);
-              }
-            },
-          ),
-        )
-            : Container(),
-        mBookDetail.is_purchase == 1 || mBookDetail.price == 0
-            ? Padding(
-          padding: const EdgeInsets.all(spacing_standard_new),
-          child: MaterialButton(
-            padding: EdgeInsets.fromLTRB(
-                24, spacing_middle, 24, spacing_middle),
-            shape: RoundedRectangleBorder(
-              borderRadius:
-              new BorderRadius.circular(spacing_control),
-              side: BorderSide(
-                  color: Theme.of(context).colorScheme.secondary),
-            ),
-            elevation: spacing_control,
-            color: Theme.of(context).colorScheme.secondary,
-            child: text(context, 'Read Book',
-                textColor: white,
-                fontSize: ts_normal,
-                fontFamily: font_medium),
-            onPressed: () {
-              readBook(context);
-            },
-          ),
-        )
-            : Container()
-      ],
-    )
+              mBookDetail.is_purchase == 0 && mBookDetail.price != 0
+                  ? Padding(
+                      padding: const EdgeInsets.all(spacing_standard_new),
+                      child: MaterialButton(
+                        padding: EdgeInsets.fromLTRB(spacing_large,
+                            spacing_middle, spacing_large, spacing_middle),
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              new BorderRadius.circular(spacing_control),
+                          side: BorderSide(
+                              color: Theme.of(context).colorScheme.primary),
+                        ),
+                        elevation: spacing_control,
+                        color: Theme.of(context).colorScheme.primary,
+                        child: text(context, 'Add to Cart',
+                            textColor: white,
+                            fontSize: ts_normal,
+                            fontFamily: font_medium),
+                        onPressed: () {
+                          if (isUserLoggedIn) {
+                            if (isExistInCart) {
+                              toast("Already exisat in cart");
+                            } else {
+                              addBookToCart();
+                            }
+                          } else {
+                            launchScreen(context, SignIn.tag);
+                          }
+                        },
+                      ),
+                    )
+                  : Container(),
+              mBookDetail.is_purchase == 1 || mBookDetail.price == 0
+                  ? Padding(
+                      padding: const EdgeInsets.all(spacing_standard_new),
+                      child: MaterialButton(
+                        padding: EdgeInsets.fromLTRB(
+                            24, spacing_middle, 24, spacing_middle),
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              new BorderRadius.circular(spacing_control),
+                          side: BorderSide(
+                              color: Theme.of(context).colorScheme.secondary),
+                        ),
+                        elevation: spacing_control,
+                        color: Theme.of(context).colorScheme.secondary,
+                        child: text(context, 'Read Book',
+                            textColor: white,
+                            fontSize: ts_normal,
+                            fontFamily: font_medium),
+                        onPressed: () {
+                          readBook(context);
+                        },
+                      ),
+                    )
+                  : Container()
+            ],
+          )
         : Container();
 
     var authorBookList = description != null
         ? BookHorizontalList(
-      description.authorBookList,
-      isHorizontal: true,
-    )
-        .paddingTop(spacing_standard_new)
-        .visible(description.authorBookList.isNotEmpty)
+            description.authorBookList,
+            isHorizontal: true,
+          )
+            .paddingTop(spacing_standard_new)
+            .visible(description.authorBookList.isNotEmpty)
         : Container();
 
     var recommondedBooks = description != null
         ? BookHorizontalList(description.recommendedBook)
-        .paddingTop(spacing_standard)
-        .visible(description.recommendedBook.isNotEmpty)
+            .paddingTop(spacing_standard)
+            .visible(description.recommendedBook.isNotEmpty)
         : Container();
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -913,224 +911,228 @@ class _BookDescriptionScreenState extends State<BookDescriptionScreen>
           children: <Widget>[
             mBookDetail != null
                 ? NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverAppBar(
-                    expandedHeight: 80 + (width * 0.7) + 100,
-                    floating: false,
-                    pinned: true,
-                    titleSpacing: 0,
-                    leading: InkWell(
-                      child: Container(
-                        padding: EdgeInsets.all(16),
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Theme.of(context).iconTheme.color,
-                        ),
-                      ),
-                      onTap: () {
-                        finish(context);
-                      },
-                      radius: spacing_standard_new,
-                    ),
-                    backgroundColor: Theme.of(context).cardTheme.color,
-                    actionsIconTheme: Theme.of(context).iconTheme,
-                    actions: <Widget>[
-                      InkWell(
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          padding: EdgeInsets.all(spacing_middle),
-                          child: SvgPicture.asset(
-                            icon_share,
-                            color: Theme.of(context).iconTheme.color,
-                          ),
-                        ),
-                        onTap: () {
-                          Share.share(mBookDetail.name +
-                              " by " +
-                              mBookDetail.authorName +
-                              "\n" +
-                              mBaseUrl +
-                              "book/detail/" +
-                              mBookDetail.bookId.toString());
-                        },
-                        radius: spacing_standard_new,
-                      ),
-                      InkWell(
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          padding: EdgeInsets.all(spacing_middle),
-                          child: SvgPicture.asset(
-                              mBookDetail.isWishList == 0
-                                  ? icon_bookmark
-                                  : icon_bookmark_fill,
-                              color: Theme.of(context).iconTheme.color),
-                        ),
-                        onTap: () {
-                          if (isUserLoggedIn) {
-                            setState(() {
-                              mBookDetail.isWishList =
-                              mBookDetail.isWishList == 0 ? 1 : 0;
-                            });
-                            addRemoveToWishList(mBookDetail.isWishList);
-                          } else {
-                            launchScreen(context, SignIn.tag);
-                          }
-                        },
-                        radius: spacing_standard_new,
-                      ).visible(mBookDetail.is_purchase == 0),
-                      cartIcon(context, cartCount)
-                    ],
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Column(
-                        children: <Widget>[
-                          Expanded(
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return <Widget>[
+                        SliverAppBar(
+                          expandedHeight: 80 + (width * 0.7) + 100,
+                          floating: false,
+                          pinned: true,
+                          titleSpacing: 0,
+                          leading: InkWell(
                             child: Container(
-                              child: AspectRatio(
-                                child: Card(
-                                  semanticContainer: true,
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  elevation: spacing_standard,
-                                  margin: EdgeInsets.all(0),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        spacing_standard),
-                                  ),
-                                  child: networkImage(
-                                    mBookDetail.frontCover,
-                                  ),
-                                ),
-                                aspectRatio: 6 / 9,
+                              padding: EdgeInsets.all(16),
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: Theme.of(context).iconTheme.color,
                               ),
-                            ).paddingBottom(spacing_standard_new),
-                          ),
-                          text(context, mBookDetail.name,
-                              textColor:
-                              Theme.of(context).textTheme.title.color,
-                              fontSize: ts_medium_large,
-                              fontFamily: font_medium,maxLine: 2),
-                          InkWell(
-                            child: text(context, mBookDetail.authorName,
-                                fontFamily: font_medium,
-                                fontSize: ts_extra_normal,
-                                textColor: Theme.of(context)
-                                    .textTheme
-                                    .button
-                                    .color).paddingTop(spacing_control),
-                            onTap: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AuthorDetailScreen(
-                                        authorDetail:description.authorDetail[0],
-                                      )));
-
-                            },
-                          ),
-                          Container(
-                            width: width * 0.35,
-                            margin: EdgeInsets.only(
-                                top: spacing_standard_new),
-                            padding: EdgeInsets.only(
-                                top: spacing_control,
-                                bottom: spacing_control),
-                            decoration: boxDecoration(context,
-                                bgColor: Theme.of(context).highlightColor,
-                                radius: spacing_standard_new),
-                            child: Row(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                RatingBar.readOnly(
-                                  initialRating: double.parse(
-                                      mBookDetail.totalRating.toString()),
-                                  emptyIcon: Icon(Icons.star).icon,
-                                  filledIcon: Icon(Icons.star).icon,
-                                  filledColor: Colors.amber,
-                                  emptyColor:
-                                  Colors.grey.withOpacity(0.7),
-                                  size: 15,
-                                ),
-                                text(
-                                    context,
-                                    double.parse(mBookDetail
-                                        .totalRating
-                                        .toStringAsFixed(1))
-                                        .toString(),
-                                    fontFamily: font_medium)
-                                    .paddingOnly(left: 8),
-                              ],
                             ),
-                          )
-                        ],
-                      ).paddingTop(80),
-                    ),
-                  ),
-                ];
-              },
-              body: RefreshIndicator(
-                onRefresh: () {
-                  return fetchBookDetail();
-                },
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      bookDescriptionWidget,
-                      priceInfo,
-                      discountInfo,
-                      Container(
-                        width: double.infinity,
-                        margin:
-                        EdgeInsets.only(top: spacing_standard_new),
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).cardTheme.color,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Theme.of(context)
-                                      .hoverColor
-                                      .withOpacity(0.15),
-                                  blurRadius: 5,
-                                  spreadRadius: 4,
-                                  offset: Offset.fromDirection(3, 1))
-                            ]),
+                            onTap: () {
+                              finish(context);
+                            },
+                            radius: spacing_standard_new,
+                          ),
+                          backgroundColor: Theme.of(context).cardTheme.color,
+                          actionsIconTheme: Theme.of(context).iconTheme,
+                          actions: <Widget>[
+                            InkWell(
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                padding: EdgeInsets.all(spacing_middle),
+                                child: SvgPicture.asset(
+                                  icon_share,
+                                  color: Theme.of(context).iconTheme.color,
+                                ),
+                              ),
+                              onTap: () {
+                                Share.share(mBookDetail.name +
+                                    " by " +
+                                    mBookDetail.authorName +
+                                    "\n" +
+                                    mBaseUrl +
+                                    "book/detail/" +
+                                    mBookDetail.bookId.toString());
+                              },
+                              radius: spacing_standard_new,
+                            ),
+                            InkWell(
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                padding: EdgeInsets.all(spacing_middle),
+                                child: SvgPicture.asset(
+                                    mBookDetail.isWishList == 0
+                                        ? icon_bookmark
+                                        : icon_bookmark_fill,
+                                    color: Theme.of(context).iconTheme.color),
+                              ),
+                              onTap: () {
+                                if (isUserLoggedIn) {
+                                  setState(() {
+                                    mBookDetail.isWishList =
+                                        mBookDetail.isWishList == 0 ? 1 : 0;
+                                  });
+                                  addRemoveToWishList(mBookDetail.isWishList);
+                                } else {
+                                  launchScreen(context, SignIn.tag);
+                                }
+                              },
+                              radius: spacing_standard_new,
+                            ).visible(mBookDetail.is_purchase == 0),
+                            cartIcon(context, cartCount)
+                          ],
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: Column(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    child: AspectRatio(
+                                      child: Card(
+                                        semanticContainer: true,
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        elevation: spacing_standard,
+                                        margin: EdgeInsets.all(0),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              spacing_standard),
+                                        ),
+                                        child: networkImage(
+                                          mBookDetail.frontCover,
+                                        ),
+                                      ),
+                                      aspectRatio: 6 / 9,
+                                    ),
+                                  ).paddingBottom(spacing_standard_new),
+                                ),
+                                text(context, mBookDetail.name,
+                                    textColor:
+                                        Theme.of(context).textTheme.title.color,
+                                    fontSize: ts_medium_large,
+                                    fontFamily: font_medium,
+                                    maxLine: 2),
+                                InkWell(
+                                  child: text(context, mBookDetail.authorName,
+                                          fontFamily: font_medium,
+                                          fontSize: ts_extra_normal,
+                                          textColor: Theme.of(context)
+                                              .textTheme
+                                              .button
+                                              .color)
+                                      .paddingTop(spacing_control),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AuthorDetailScreen(
+                                                  authorDetail: description
+                                                      .authorDetail[0],
+                                                )));
+                                  },
+                                ),
+                                Container(
+                                  width: width * 0.35,
+                                  margin: EdgeInsets.only(
+                                      top: spacing_standard_new),
+                                  padding: EdgeInsets.only(
+                                      top: spacing_control,
+                                      bottom: spacing_control),
+                                  decoration: boxDecoration(context,
+                                      bgColor: Theme.of(context).highlightColor,
+                                      radius: spacing_standard_new),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      RatingBar.readOnly(
+                                        initialRating: double.parse(
+                                            mBookDetail.totalRating.toString()),
+                                        emptyIcon: Icon(Icons.star).icon,
+                                        filledIcon: Icon(Icons.star).icon,
+                                        filledColor: Colors.amber,
+                                        emptyColor:
+                                            Colors.grey.withOpacity(0.7),
+                                        size: 15,
+                                      ),
+                                      text(
+                                              context,
+                                              double.parse(mBookDetail
+                                                      .totalRating
+                                                      .toStringAsFixed(1))
+                                                  .toString(),
+                                              fontFamily: font_medium)
+                                          .paddingOnly(left: 8),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ).paddingTop(80),
+                          ),
+                        ),
+                      ];
+                    },
+                    body: RefreshIndicator(
+                      onRefresh: () {
+                        return fetchBookDetail();
+                      },
+                      child: SingleChildScrollView(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            buttons,
-                            yourReview,
-                            topReviews,
-                            horizontalHeading(
-                                context,
-                                keyString(context,
-                                    "lbl_more_books_by_this_author"),
-                                showViewAll: false)
-                                .visible(description
-                                .authorBookList.isNotEmpty),
-                            authorBookList,
-                            horizontalHeading(
-                                context,
-                                keyString(
-                                    context, "lnl_you_may_also_like"),
-                                showViewAll: false)
-                                .paddingTop(spacing_standard_new)
-                                .visible(description
-                                .recommendedBook.isNotEmpty),
-                            recommondedBooks,
-                            SizedBox(
-                              height: 70,
-                            )
+                            bookDescriptionWidget,
+                            priceInfo,
+                            discountInfo,
+                            Container(
+                              width: double.infinity,
+                              margin:
+                                  EdgeInsets.only(top: spacing_standard_new),
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).cardTheme.color,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Theme.of(context)
+                                            .hoverColor
+                                            .withOpacity(0.15),
+                                        blurRadius: 5,
+                                        spreadRadius: 4,
+                                        offset: Offset.fromDirection(3, 1))
+                                  ]),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  buttons,
+                                  yourReview,
+                                  topReviews,
+                                  horizontalHeading(
+                                          context,
+                                          keyString(context,
+                                              "lbl_more_books_by_this_author"),
+                                          showViewAll: false)
+                                      .visible(description
+                                          .authorBookList.isNotEmpty),
+                                  authorBookList,
+                                  horizontalHeading(
+                                          context,
+                                          keyString(
+                                              context, "lnl_you_may_also_like"),
+                                          showViewAll: false)
+                                      .paddingTop(spacing_standard_new)
+                                      .visible(description
+                                          .recommendedBook.isNotEmpty),
+                                  recommondedBooks,
+                                  SizedBox(
+                                    height: 70,
+                                  )
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            )
+                    ),
+                  )
                 : Container(),
             Center(child: loadingWidgetMaker()).visible(isLoading)
           ],

@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-const colorPrimary = Color(0xFF234AA1);
-const colorPrimaryDark = Color(0xFF234AA1);
-const colorPrimary_trans = Color(0xFF7900F5);
+const colorPrimary = Color(0xFF65328f);
+const colorPrimaryDark = Color(0xFF371d4c);
+const colorPrimary_trans = Color(0xFF65328f);
 const colorAccent = Color(0xFFee4444);
 const colorAccent_alpha = Color(0xFF94ffc107);
 const colorAccentTrans = Color(0xFFae074daf);
@@ -49,5 +49,3 @@ const book_detail_background = Color(0xFFF6F6F6);
 const app_background_black = Color(0xFF151F2B);
 const card_background_black = Color(0xFF1D2939);
 const color_primary_black = Color(0xFFBB86FC);
-
-

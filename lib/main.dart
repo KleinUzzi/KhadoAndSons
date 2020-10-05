@@ -48,9 +48,9 @@ void main() async {
   } on Exception catch (_) {
     print('never reached');
   }
-  var language=pref.getString(SELECTED_LANGUAGE_CODE)?? "en";
-  bool isDarkTheme=pref.getBool(IS_DARK_THEME) ?? false;
-  runApp(new MyApp(language,isDarkTheme));
+  var language = pref.getString(SELECTED_LANGUAGE_CODE) ?? "en";
+  bool isDarkTheme = pref.getBool(IS_DARK_THEME) ?? false;
+  runApp(new MyApp(language, isDarkTheme));
 }
 
 class MyApp extends StatefulWidget {
@@ -58,14 +58,13 @@ class MyApp extends StatefulWidget {
   var language;
   bool isDarkTheme;
 
-  MyApp( this.language,this.isDarkTheme);
+  MyApp(this.language, this.isDarkTheme);
 
   @override
   MyAppState createState() => MyAppState();
 }
 
 class MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -73,35 +72,55 @@ class MyAppState extends State<MyApp> {
       child: Consumer<AppState>(builder: (context, provider, builder) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          supportedLocales: [Locale('en', ''), Locale('fr', ''), Locale('af', ''), Locale('de', ''), Locale('es', ''), Locale('id', ''), Locale('pt', ''), Locale('tr', ''), Locale('hi', '')],
-          localizationsDelegates: [AppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
+          supportedLocales: [
+            Locale('en', ''),
+            Locale('fr', ''),
+            Locale('af', ''),
+            Locale('de', ''),
+            Locale('es', ''),
+            Locale('id', ''),
+            Locale('pt', ''),
+            Locale('tr', ''),
+            Locale('hi', '')
+          ],
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          ],
           localeResolutionCallback: (locale, supportedLocales) {
             return Locale(Provider.of<AppState>(context).selectedLanguageCode);
           },
           locale: Provider.of<AppState>(context).locale,
           home: SplashScreen(),
           theme: AppTheme.lightTheme, // ThemeData(primarySwatch: Colors.blue),
-          darkTheme: AppTheme.darkTheme, // ThemeData(primarySwatch: Colors.blue),
+          darkTheme:
+              AppTheme.darkTheme, // ThemeData(primarySwatch: Colors.blue),
           themeMode: provider.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
           routes: <String, WidgetBuilder>{
             HomeScreen.tag: (BuildContext context) => HomeScreen(),
             SplashScreen.tag: (BuildContext context) => SplashScreen(),
-            AuthorDetailScreen.tag: (BuildContext context) => AuthorDetailScreen(),
+            AuthorDetailScreen.tag: (BuildContext context) =>
+                AuthorDetailScreen(),
             SearchScreen.tag: (BuildContext context) => SearchScreen(),
             SignUp.tag: (BuildContext context) => SignUp(),
             SignIn.tag: (BuildContext context) => SignIn(),
-            ChangePasswordScreen.tag: (BuildContext context) => ChangePasswordScreen(),
+            ChangePasswordScreen.tag: (BuildContext context) =>
+                ChangePasswordScreen(),
             AboutApp.tag: (BuildContext context) => AboutApp(),
             WishlistScreen.tag: (BuildContext context) => WishlistScreen(),
-            BookDescriptionScreen.tag: (BuildContext context) => BookDescriptionScreen(),
+            BookDescriptionScreen.tag: (BuildContext context) =>
+                BookDescriptionScreen(),
             OnBoardingScreen.tag: (BuildContext context) => OnBoardingScreen(),
-            TransactionHistoryScreen.tag: (BuildContext context) => TransactionHistoryScreen(),
+            TransactionHistoryScreen.tag: (BuildContext context) =>
+                TransactionHistoryScreen(),
             SettingScreen.tag: (BuildContext context) => SettingScreen(),
             CartScreen.tag: (BuildContext context) => CartScreen(),
             ProfileScreen.tag: (BuildContext context) => ProfileScreen(),
             LibraryScreen.tag: (BuildContext context) => LibraryScreen(),
             FeedbackScreen.tag: (BuildContext context) => FeedbackScreen(),
-            AuthorsListScreen.tag: (BuildContext context) => AuthorsListScreen(),
+            AuthorsListScreen.tag: (BuildContext context) =>
+                AuthorsListScreen(),
             BookReviews.tag: (BuildContext context) => BookReviews(),
             ForgotPassword.tag: (BuildContext context) => ForgotPassword(),
             VerifyOTPScreen.tag: (BuildContext context) => VerifyOTPScreen(),
@@ -122,7 +141,8 @@ class MyAppState extends State<MyApp> {
 
 class ScrBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
   }
 }
@@ -141,8 +161,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() async {
-    bool isLaunched=await getBool(IS_ONBOARDING_LAUNCHED)?? false;
-    launchScreenWithNewTask(context, isLaunched?HomeScreen.tag:OnBoardingScreen.tag);
+    bool isLaunched = await getBool(IS_ONBOARDING_LAUNCHED) ?? false;
+    launchScreenWithNewTask(
+        context, isLaunched ? HomeScreen.tag : OnBoardingScreen.tag);
   }
 
   @override
@@ -166,7 +187,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            color: Colors.black.withOpacity(0.6),
+            color: colorPrimary,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -178,8 +199,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 120,
                 width: 120,
               ).cornerRadiusWithClipRRect(10),
-              Text(keyString(context,"app_name")).withStyle(fontSize: 24, color: white, fontFamily: font_bold).paddingOnly(top: 16),
-              text(context,keyString(context,"lbl_welcome_to_ebook_spot"), fontSize: 16, textColor: white).paddingOnly(top: 8),
+              Text(keyString(context, "app_name"))
+                  .withStyle(fontSize: 24, color: white, fontFamily: font_bold)
+                  .paddingOnly(top: 16),
+              // text(context,keyString(context,"lbl_welcome_to_ebook_spot"), fontSize: 16, textColor: white).paddingOnly(top: 8),
             ],
           )
         ],
