@@ -1,6 +1,6 @@
-# granth_flutter
+# Khado And Sons
 
-A new Book selling  Flutter application.
+An eBook selling  Flutter application.
 
 ## Getting Started
 

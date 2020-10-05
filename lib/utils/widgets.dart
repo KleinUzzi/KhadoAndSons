@@ -521,8 +521,8 @@ Widget loadingWidgetMaker() {
           height: 45,
           padding: const EdgeInsets.all(8.0),
           child: CircularProgressIndicator(
-            strokeWidth: 3,
-          ),
+              strokeWidth: 3,
+              valueColor: new AlwaysStoppedAnimation<Color>(colorAccent)),
         )),
   );
 }
